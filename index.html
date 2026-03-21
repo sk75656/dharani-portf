@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dharani S K | Ultra Portfolio</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+:root{--accent:#e10600}
+body{margin:0;overflow:hidden;font-family:"Segoe UI",sans-serif;background:radial-gradient(circle at center,#1a1a1a,#000)}
+
+/* Loader */
+#loader{position:fixed;inset:0;background:#000;display:flex;justify-content:center;align-items:center;color:#fff;font-size:22px;z-index:999;letter-spacing:2px}
+
+/* Progress bar */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:998}
+
+.glow{position:fixed;width:420px;height:420px;background:radial-gradient(circle,rgba(225,6,0,.35),transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)}
+
+.slide{position:absolute;width:100%;height:100vh;display:none;justify-content:center;align-items:center;padding:28px;overflow-y:auto}
+
+.glass{background:rgba(255,255,255,.96);border-radius:28px;padding:46px;max-width:1100px;text-align:center;box-shadow:0 0 60px rgba(225,6,0,.35);backdrop-filter:blur(10px)}
+
+h1{font-size:44px;margin:0 0 10px}
+h2{color:var(--accent)}
+h3{color:var(--accent)}
+p{color:#000}
+
+button{margin:10px;padding:12px 26px;border-radius:28px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;transition:.25s}
+button:hover{transform:scale(1.08);box-shadow:0 10px 25px rgba(0,0,0,.25)}
+
+img{width:100%;max-width:420px;border-radius:16px;margin:16px 0;cursor:pointer;transition:.3s}
+img:hover{transform:scale(1.04)}
+
+/* Modal viewer */
+#viewer{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;justify-content:center;align-items:center;z-index:1000}
+#viewer img{max-width:90%;max-height:90%;border-radius:16px}
+
+/* Cards */
+.card{display:inline-block;background:#111;color:#fff;padding:14px 16px;border-radius:14px;margin:10px;cursor:pointer;transition:.25s}
+.card:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+
+.nav{position:fixed;right:18px;top:50%;transform:translateY(-50%)}
+.dot{width:14px;height:14px;background:#000;border-radius:50%;margin:10px;opacity:.4;cursor:pointer;transition:.2s}
+.dot.active{background:var(--accent);opacity:1;transform:scale(1.35)}
+
+/* Hint */
+#hint{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);color:#bbb;font-size:12px;opacity:.7}
+
+@media(max-width:768px){body{cursor:auto}}
+</style>
+</head>
+
+<body>
+
+<div id="loader">LOADING PORTFOLIO...</div>
+<div id="progress"></div>
+<div id="viewer" onclick="closeViewer()"><img id="viewImg"></div>
+<div class="glow" id="glow"></div>
+<div id="hint">Scroll / ↑ ↓ to navigate • Click images to zoom</div>
+
+<!-- HERO -->
+<div class="slide" id="slide1" style="display:flex">
+  <div class="glass">
+    <h1>Dharani S K</h1>
+    <p id="typing"></p>
+    <button onclick="goSlide(2)">Explore</button>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="slide" id="slide2">
+  <div class="glass">
+    <h2>About</h2>
+    <p>Design-driven ECE graduate skilled in UI/UX, video editing & IoT.</p>
+    <p>CGPA: 8.04</p>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="slide" id="slide3">
+  <div class="glass">
+    <h2>Projects</h2>
+    <button onclick="openProject(1)">Smart Glasses</button>
+    <button onclick="openProject(2)">Gesture Talk</button>
+
+    <h3>Art Work</h3>
+    <img src="cloud-kitchen.png" onclick="openViewer(this.src)">
+
+    <h3>Video Work</h3>
+    <div class="card" onclick="openVideo('https://www.instagram.com/reel/DNC0SuqP8SW/')">Video 1 ▶</div>
+    <div class="card" onclick="openVideo('https://www.instagram.com/p/C_W2xeETdgY/')">Video 2 ▶</div>
+    <div class="card" onclick="openVideo('https://www.instagram.com/reel/C-xdx8oPkMr/')">Video 3 ▶</div>
+    <div class="card" onclick="openVideo('https://www.instagram.com/reel/C-kb1PIPTac/')">Video 4 ▶</div>
+  </div>
+</div>
+
+<!-- PROJECT 1 -->
+<div class="slide" id="project1">
+  <div class="glass">
+    <h2>Smart Glasses</h2>
+    <img src="smart-glass.jpg" onclick="openViewer(this.src)">
+    <p>- IoT assistive device using sensors</p>
+    <p>- Real-time object detection</p>
+    <p>- GPS + voice control</p>
+    <button onclick="backToProjects()">Back</button>
+  </div>
+</div>
+
+<!-- PROJECT 2 -->
+<div class="slide" id="project2">
+  <div class="glass">
+    <h2>Gesture Talk</h2>
+    <img src="gesture-talk.jpg" onclick="openViewer(this.src)">
+    <p>- Gesture to speech system</p>
+    <p>- Real-time processing</p>
+    <p>- Accessibility solution</p>
+    <button onclick="backToProjects()">Back</button>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="slide" id="slide4">
+  <div class="glass">
+    <h2>Contact</h2>
+    <p>Email: skdharani2004@gmail.com</p>
+    <p>Phone: +91 7708275656</p>
+    <a href="Dharani-Resume.pdf" download>
+      <button>Download Resume</button>
+    </a>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="dot active" onclick="goSlide(1)"></div>
+  <div class="dot" onclick="goSlide(2)"></div>
+  <div class="dot" onclick="goSlide(3)"></div>
+  <div class="dot" onclick="goSlide(4)"></div>
+</div>
+
+<script>
+let current=1,total=4,isScrolling=false;
+
+window.onload=()=>{setTimeout(()=>{loader.style.display='none'},1000)}
+
+function updateProgress(){
+  const p=(current/total)*100;
+  document.getElementById('progress').style.width=p+'%';
+}
+
+function animateSlide(to){
+  if(to<1||to>total||to===current)return;
+  const cs=document.getElementById('slide'+current);
+  const ns=document.getElementById('slide'+to);
+  ns.style.display='flex';
+  gsap.fromTo(ns,{scale:.85,opacity:0},{duration:.6,scale:1,opacity:1});
+  gsap.to(cs,{duration:.6,scale:1.15,opacity:0});
+  setTimeout(()=>cs.style.display='none',600);
+  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('active'));
+  document.querySelectorAll('.dot')[to-1].classList.add('active');
+  current=to; updateProgress();
+}
+function goSlide(n){animateSlide(n)}
+
+function openProject(n){
+  document.querySelectorAll('.slide').forEach(s=>s.style.display='none');
+  const s=document.getElementById('project'+n);
+  s.style.display='flex';
+  gsap.fromTo(s,{opacity:0,y:40},{opacity:1,y:0,duration:.5});
+  current=0;
+}
+function backToProjects(){
+  document.querySelectorAll('.slide').forEach(s=>s.style.display='none');
+  const s=document.getElementById('slide3');
+  s.style.display='flex';
+  current=3; updateProgress();
+}
+
+function openVideo(u){window.open(u,'_blank')}
+
+window.addEventListener('wheel',e=>{
+  if(current===0||isScrolling)return; isScrolling=true;
+  e.deltaY>0?animateSlide(current+1):animateSlide(current-1);
+  setTimeout(()=>isScrolling=false,700);
+});
+
+window.addEventListener('keydown',e=>{
+  if(current===0)return;
+  if(e.key==='ArrowDown')animateSlide(current+1);
+  if(e.key==='ArrowUp')animateSlide(current-1);
+});
+
+// Glow follow
+const glow=document.getElementById('glow');
+document.addEventListener('mousemove',e=>{
+  glow.style.left=e.clientX+'px';
+  glow.style.top=e.clientY+'px';
+});
+
+// Typing
+const text='Creative Designer | Video Editor | IoT Developer';
+let i=0;function typeEffect(){if(i<text.length){typing.innerHTML+=text[i++];setTimeout(typeEffect,35)}}typeEffect();
+
+// Image viewer
+function openViewer(src){viewer.style.display='flex';viewImg.src=src}
+function closeViewer(){viewer.style.display='none'}
+
+updateProgress();
+</script>
+
+</body>
+</html>
