@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dharani | Creative Designer & Engineer Portfolio</title>
-    <!-- Premium Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Dharani SK | Cinematic Portfolio & Systems</title>
+    <!-- Premium Digital Fonts & Icon Toolkits -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-deep: #030712;
-            --bg-surface: rgba(15, 23, 42, 0.4);
-            --border-glow: rgba(6, 182, 212, 0.15);
-            --accent-cyan: #06b6d4;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
+            --bg-void: #020308;
+            --panel-bg: rgba(6, 11, 25, 0.5);
+            --neon-cyan: #06b6d4;
+            --neon-blue: #2563eb;
+            --neon-purple: #7c3aed;
+            --matrix-glow: rgba(6, 182, 212, 0.25);
+            --text-ghost: #f1f5f9;
+            --text-dark-muted: #64748b;
         }
 
         * {
@@ -26,861 +26,1044 @@
             padding: 0;
         }
 
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-primary);
+        html, body {
+            background-color: var(--bg-void);
+            color: var(--text-ghost);
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        /* Sci-Fi Canvas Background Grid & Particles */
-        .cyber-grid {
+        body.cinematic-lock {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Custom Scrollbar to match design ecosystem */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: #0e172c; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+
+        /* ==========================================================================
+           CINEMATIC MOVIE INTRO SEQUENCE (ANAMORPHIC HUD OVERLAY)
+           ========================================================================== */
+        #cinematic-engine {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-color: #000;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 1s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        /* Movie Aspect Ratio Black Bars (Letterboxing Effect) */
+        .cinema-bar-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10vh;
+            background: #000;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .cinema-bar-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10vh;
+            background: #000;
+            z-index: 10;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .hud-scanlines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .intro-title-crawl {
+            text-align: center;
+            z-index: 5;
+            transform: scale(0.9);
+            filter: blur(10px);
+            opacity: 0;
+            animation: cinematicReveal 3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.3s;
+        }
+
+        .intro-title-crawl h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .intro-title-crawl h2 span {
+            color: var(--neon-cyan);
+        }
+
+        .intro-title-crawl p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            color: var(--text-dark-muted);
+            text-transform: uppercase;
+        }
+
+        /* Movie Scene Shutter Fade out */
+        #cinematic-engine.dissolved {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.05);
+        }
+
+        @keyframes cinematicReveal {
+            0% { transform: scale(0.92); filter: blur(12px); opacity: 0; }
+            50% { filter: blur(0px); opacity: 1; }
+            100% { transform: scale(1); filter: blur(0px); opacity: 1; }
+        }
+
+        /* ==========================================================================
+           MAIN COMMAND DESIGN FRAMEWORK
+           ========================================================================== */
+        .ambient-starfield {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
+            background-size: 550px 550px;
+            background-position: 0 0;
+            z-index: -3;
+            opacity: 0.04;
+        }
+
+        .glow-nodes {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, rgba(6,182,212,0.02) 40%, rgba(0,0,0,0) 70%);
+            top: -300px;
+            left: -200px;
             z-index: -2;
             pointer-events: none;
         }
 
-        .gradient-orb {
-            position: fixed;
-            width: 700px;
-            height: 700px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, rgba(139,92,246,0.02) 50%, rgba(0,0,0,0) 100%);
-            top: -200px;
-            right: -200px;
-            z-index: -1;
-            filter: blur(40px);
-            pointer-events: none;
-            animation: pulseOrb 12s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulseOrb {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.15) translate(-50px, 50px); }
-        }
-
-        /* Navigation Style */
+        /* Premium Navigation Menu */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 8%;
-            background: rgba(3, 7, 18, 0.7);
-            backdrop-filter: blur(25px);
+            padding: 30px 10%;
+            background: rgba(2, 3, 8, 0.8);
+            backdrop-filter: blur(30px);
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: -1px;
+        .nav-identity {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
             color: #fff;
-        }
-
-        .logo span {
-            color: var(--accent-cyan);
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
             text-decoration: none;
-            margin-left: 35px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: 0.3s;
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-cyan);
+        .nav-identity span { color: var(--neon-cyan); }
+
+        .nav-menu a {
+            color: var(--text-dark-muted);
+            text-decoration: none;
+            margin-left: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s;
         }
 
-        /* Hero Layout Container */
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--matrix-glow);
+        }
+
+        /* Elegant Structural Hero Space */
         header {
-            min-height: 95vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 10%;
-            margin-top: 50px;
+            padding: 0 12%;
+            background: radial-gradient(circle at 12% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
         }
 
-        .badge-interactive {
-            background: rgba(6, 182, 212, 0.06);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            color: var(--accent-cyan);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.8rem;
+        .architecture-tag {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            border-left: 2px solid var(--neon-cyan);
+            padding-left: 12px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 2px;
-            display: inline-block;
-            margin-bottom: 25px;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.1);
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
         header h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 30px;
-            max-width: 950px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.8rem;
+            font-weight: 900;
+            line-height: 1.05;
             letter-spacing: -2px;
+            margin-bottom: 35px;
+            max-width: 1100px;
         }
 
         header h1 span {
-            background: linear-gradient(to right, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+            background: linear-gradient(135deg, #fff 30%, var(--text-dark-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        header h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(6, 182, 212, 0.2);
+        }
+
         header p {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 650px;
+            font-size: 1.2rem;
+            color: var(--text-dark-muted);
+            max-width: 700px;
             line-height: 1.7;
-            margin-bottom: 45px;
+            margin-bottom: 50px;
+            font-weight: 400;
         }
 
-        .btn-group {
+        .action-cluster {
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
 
-        .btn-glow {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            color: #fff;
-            padding: 16px 36px;
-            border-radius: 8px;
+        .action-trigger {
+            font-family: 'Orbitron', sans-serif;
+            background: #fff;
+            color: #000;
+            padding: 18px 38px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.25);
-            transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .btn-glow:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.45);
-        }
-
-        /* Core Technical Skill Rows */
-        .skills-ribbon {
-            padding: 60px 10%;
-            background: rgba(255, 255, 255, 0.01);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-        }
-
-        .skill-node h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .skill-node h3 i {
-            color: var(--accent-cyan);
-        }
-
-        .skill-node p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Infinite Grid System with Images */
-        .portfolio-block {
-            padding: 120px 10%;
-        }
-
-        .block-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 60px;
-            letter-spacing: -1px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            border-radius: 2px;
         }
 
-        .portfolio-grid {
+        .action-trigger:hover {
+            background: var(--neon-cyan);
+            color: #fff;
+            box-shadow: 0 0 25px var(--matrix-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Core Analytical Metrics Strip */
+        .matrix-metrics {
+            padding: 80px 12%;
+            background: rgba(4, 6, 14, 0.6);
+            border-top: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 35px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 50px;
         }
 
-        /* High-End Card Mechanics */
-        .cyber-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
+        .metric-cell h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .metric-cell p {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           WORKSPACE PORTFOLIO SHOWCASE GRID (EACH CARD SHOWS IMAGE)
+           ========================================================================== */
+        .workspace-deck {
+            padding: 140px 12% 100px 12%;
+        }
+
+        .deck-header {
+            margin-bottom: 80px;
+        }
+
+        .deck-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .deck-header p {
+            color: var(--text-dark-muted);
+            font-size: 1.1rem;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 40px;
+        }
+
+        /* Glassmorphism Structural Cards with Image Slots */
+        .deck-card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
             overflow: hidden;
-            backdrop-filter: blur(12px);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer;
+            backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .cyber-card.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cyber-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(6, 182, 212, 0.4);
-            box-shadow: 0 15px 40px rgba(6, 182, 212, 0.15);
-            background: rgba(15, 23, 42, 0.6);
-        }
-
-        /* Image Wrapper & Sequential Rendering logic */
-        .image-frame {
-            width: 100%;
-            height: 220px;
-            background: #090d16;
-            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .image-frame img {
+        .deck-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 4px;
+            box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .deck-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .deck-card:hover::before {
+            box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Sequential Display Frame */
+        .deck-asset-window {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, #090f1e, #03050a);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Interactive Blueprint Grid Placeholder Layout */
+        .deck-asset-window::after {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(6, 182, 212, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+
+        .deck-asset-window img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .cyber-card:hover .image-frame img {
-            transform: scale(1.08);
+        .deck-card:hover .deck-asset-window img {
+            transform: scale(1.05);
         }
 
-        .card-body {
-            padding: 25px;
+        /* SVG Embedded Schematic Frame if image is blank */
+        .blueprint-fallback-svg {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            color: rgba(6, 182, 212, 0.15);
+            z-index: 0;
+        }
+
+        .card-main-body {
+            padding: 30px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
-        .card-head-meta {
+        .card-system-path {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
+        }
+
+        .card-main-body h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--accent-cyan);
-            margin-bottom: 12px;
-        }
-
-        .card-body h4 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 600;
             color: #fff;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
 
-        .card-body p {
-            color: var(--text-secondary);
+        .card-main-body p {
+            color: #94a3b8;
             font-size: 0.9rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        .tag-pool {
+        .card-chip-set {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
             margin-top: auto;
         }
 
-        .tag-pool span {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: #d1d5db;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 4px;
+        .card-chip-set span {
+            font-family: 'Orbitron', sans-serif;
+            background: rgba(6, 182, 212, 0.04);
+            border: 1px solid rgba(6, 182, 212, 0.1);
+            color: #cbd5e1;
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            letter-spacing: 0.5px;
         }
 
-        /* Immersive Experience Modal Window */
-        .cyber-modal {
+        /* Immersive Console Pop-Up Window */
+        .overlay-console {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(3, 7, 18, 0.92);
-            backdrop-filter: blur(20px);
+            background: rgba(1, 2, 5, 0.95);
+            backdrop-filter: blur(25px);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 10000;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
-            padding: 20px;
+            padding: 25px;
         }
 
-        .cyber-modal.active {
+        .overlay-console.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .modal-box {
-            background: #0b111e;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            max-width: 700px;
+        .console-frame {
+            background: #070b16;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            max-width: 720px;
             width: 100%;
-            border-radius: 16px;
-            padding: 40px;
+            border-radius: 2px;
+            padding: 45px;
             position: relative;
-            transform: scale(0.95);
+            transform: translateY(20px);
             transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.1);
         }
 
-        .cyber-modal.active .modal-box {
-            transform: scale(1);
+        .overlay-console.active .console-frame {
+            transform: translateY(0);
         }
 
-        .exit-btn {
+        .terminal-kill {
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 30px;
+            right: 30px;
             background: none;
             border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
+            color: var(--text-dark-muted);
+            font-size: 1.4rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: color 0.2s;
         }
 
-        .exit-btn:hover { color: #fff; }
+        .terminal-kill:hover { color: var(--neon-cyan); }
 
-        .modal-tag {
-            color: var(--accent-purple);
+        .console-meta-tag {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-purple);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .console-header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .console-explanation {
+            color: #94a3b8;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 35px;
+        }
+
+        .node-specification-header {
+            font-family: 'Orbitron', sans-serif;
             font-size: 0.8rem;
-            font-weight: 700;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .modal-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .modal-info {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .spec-list-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             color: #fff;
-            margin-bottom: 15px;
-            font-weight: 600;
-            border-left: 3px solid var(--accent-cyan);
-            padding-left: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
         }
 
-        .bullet-stack {
+        .spec-bullet-tree {
             list-style: none;
         }
 
-        .bullet-stack li {
-            margin-bottom: 12px;
+        .spec-bullet-tree li {
+            margin-bottom: 14px;
             font-size: 0.95rem;
-            color: #e5e7eb;
+            color: #e2e8f0;
             display: flex;
             align-items: flex-start;
+            line-height: 1.5;
         }
 
-        .bullet-stack li i {
-            color: var(--accent-cyan);
-            margin-right: 12px;
-            margin-top: 4px;
-            font-size: 0.85rem;
+        .spec-bullet-tree li i {
+            color: var(--neon-cyan);
+            margin-right: 15px;
+            margin-top: 5px;
+            font-size: 0.8rem;
         }
 
-        /* Footer System Layout */
+        /* Footer Command Station Layout */
         footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 100px 10% 60px 10%;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 120px 12% 80px 12%;
             text-align: center;
-            background: rgba(2, 4, 10, 0.5);
+            background: #010206;
+            position: relative;
         }
 
         footer h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
         footer p {
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            font-size: 1.05rem;
+            color: var(--text-dark-muted);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
         }
 
-        .anchor-links {
+        .terminal-connections {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
         }
 
-        .anchor-links a {
-            color: var(--text-secondary);
-            font-size: 1.3rem;
-            width: 55px;
-            height: 55px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
+        .terminal-connections a {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.01);
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .anchor-links a:hover {
+        .terminal-connections a:hover {
             color: #fff;
-            border-color: var(--accent-cyan);
-            background: rgba(6, 182, 212, 0.05);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+            border-color: var(--neon-cyan);
+            background: rgba(6, 182, 212, 0.03);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+            transform: translateY(-3px);
         }
 
         @media(max-width: 992px) {
-            header h1 { font-size: 3.2rem; }
-            header { padding: 0 6%; }
-            .portfolio-block, .skills-ribbon { padding: 80px 6%; }
+            header h1 { font-size: 3.5rem; }
+            header { padding: 0 8%; }
+            .workspace-deck, .matrix-metrics { padding: 100px 8%; }
         }
 
         @media(max-width: 768px) {
-            header h1 { font-size: 2.5rem; }
-            .btn-group { flex-direction: column; }
-            .portfolio-grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.6rem; }
+            .showcase-grid { grid-template-columns: 1fr; }
+            .console-frame { padding: 30px 20px; }
+            .intro-title-crawl h2 { font-size: 2rem; letter-spacing: 6px; }
         }
     </style>
 </head>
-<body>
+<body class="cinematic-lock">
 
-    <div class="cyber-grid"></div>
-    <div class="gradient-orb"></div>
-
-    <!-- Nav Integration -->
-    <nav>
-        <div class="logo">DHARANI<span>.</span></div>
-        <div class="nav-links">
-            <a href="#" class="active">Systems &amp; Designs</a>
-            <a href="#contact">Contact</a>
+    <!-- Cinematic HUD Letterbox Intro -->
+    <div id="cinematic-engine">
+        <div class="cinema-bar-top"></div>
+        <div class="hud-scanlines"></div>
+        <div class="intro-title-crawl">
+            <h2>Dharani<span> SK</span></h2>
+            <p>Boot Sequence // Visual Systems Execution</p>
         </div>
-    </nav>
-
-    <!-- Main Dynamic Presentation Space -->
-    <header>
-        <div class="badge-interactive">Electronics Engineer &amp; Visual Architect</div>
-        <h1>Engineered precision meets high-end <span>brand architecture.</span></h1>
-        <p>Leveraging my background in Electronics &amp; Communication Engineering (VCET) paired with professional layout assets across Adobe Illustrator, Photoshop, and structural UI/UX tools.</p>
-        <div class="btn-group">
-            <a href="#work" class="btn-glow">Review Integrated Cases</a>
-            <a href="#contact" class="btn-glow" style="background: transparent; border: 1px solid rgba(255,255,255,0.15);">Initiate Brief</a>
-        </div>
-    </header>
-
-    <!-- CV Engineering Skills Integration -->
-    <section class="skills-ribbon">
-        <div class="skill-node">
-            <h3><i class="fa-solid fa-wand-magic-sparkles"></i>Adobe Suite Expert</h3>
-            <p>Advanced structural canvas orchestration, brand identity layouts, and label blueprints via Illustrator and Photoshop.</p>
-        </div>
-        <div class="skill-node">
-            <h3><i class="fa-solid fa-microchip"></i>ECE Core Engineering</h3>
-            <p>Translating technical analytical matrices, Arduino infrastructure, and product workflows into production-ready assets.</p>
-        </div>
-        <div class="skill-node">
-            <h3><i class="fa-solid fa-chart-network"></i>Data &amp; UI Integration</h3>
-            <p>Deploying advanced Power BI dashboards, Python algorithmic models, and clean digital interfaces via Penpot.</p>
-        </div>
-    </section>
-
-    <!-- Project Presentation Matrix -->
-    <section class="portfolio-block" id="work">
-        <h2 class="block-title">Workspace Index</h2>
-        
-        <div class="portfolio-grid">
-            
-            <!-- MASTER ACADEMIC EMBEDDED PROJECT FROM CV -->
-            <div class="cyber-card" onclick="openProject('Smart Glasses for Blind People', 'Embedded Engineering &amp; UI Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters.', ['Embedded camera modules with live ultrasonic sensor mapping arrays', 'Vibrational haptic nodes paired with synchronized audio indicators', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines'])">
-                <div class="image-frame">
-                    <img src="1.jpg" alt="Smart Glasses Project View" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Academic Engineering Capstone</div>
-                        <div>Order: 01</div>
-                    </div>
-                    <h4>Smart Glasses Assistant System</h4>
-                    <p>Object detection and footboard prevention hardware layout engineered for optimal visual impairment safety.</p>
-                    <div class="tag-pool">
-                        <span>Arduino IDE</span><span>Ultrasonic Array</span><span>Haptics</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Outrider Rucksack -->
-            <div class="cyber-card" onclick="openProject('Outrider 40L Rucksack', 'Technical Product Strategy', 'Conquer Outdoor with absolute tactical capacity. Engineered for wild terrains and professional cross-mountain utility layouts.', ['Diamond-Ripstop Weatherproof Fabric Layering', 'Integrated External Webbing &amp; Multi-Point Compression', 'Dual-Density Ergonomic Shoulder Harness System Layout'])">
-                <div class="image-frame">
-                    <img src="2.jpg" alt="Outrider Rucksack" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Technical Apparel</div>
-                        <div>Order: 02</div>
-                    </div>
-                    <h4>Outrider 40L Rucksack</h4>
-                    <p>Structured layout highlighting performance parameters, weather stability, and storage zones.</p>
-                    <div class="tag-pool">
-                        <span>Technical Drawing</span><span>Illustrator Layout</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: Travel to Desire -->
-            <div class="cyber-card" onclick="openProject('Travel to Desire 45L', 'Tactical Carrier Blueprint', 'Designed for modern digital nomads demanding secure device integration and high capacity execution paths.', ['180° Clamshell Laptop Vault Alignment', 'Ventilated Isolated Shoe &amp; Laundry Bay Design', 'Scratch-Resistant Micro-Fleece Tech Spaces'])">
-                <div class="image-frame">
-                    <img src="3.jpg" alt="Travel to Desire" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Travel Architecture</div>
-                        <div>Order: 03</div>
-                    </div>
-                    <h4>Travel to Desire 45L</h4>
-                    <p>High-capacity workflow blueprints targeting deep technical device organization parameters.</p>
-                    <div class="tag-pool">
-                        <span>Component Mapping</span><span>Vector Specs</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4: Urban Handbag -->
-            <div class="cyber-card" onclick="openProject('Urban Handbag Collection', 'Minimalist Premium Grid', 'Sleek, fluid lifestyle layouts demonstrating how technical waterproof protection fits into elegant street aesthetics.', ['High-Grade Matte Waterproof Polyester Weave', 'Hidden Magnetic Structural Closures', 'Subtle Metallic Embossed Branding Accents'])">
-                <div class="image-frame">
-                    <img src="4.jpg" alt="Urban Handbags" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Lifestyle Utility</div>
-                        <div>Order: 04</div>
-                    </div>
-                    <h4>Urban Handbag Collection</h4>
-                    <p>Clean asymmetric layouts prioritizing structural design aesthetics, surface textures, and metallic accents.</p>
-                    <div class="tag-pool">
-                        <span>Minimalist Form</span><span>Asset Framing</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5: iStorm Insulated -->
-            <div class="cyber-card" onclick="openProject('iStorm Food Utility', 'Thermal Performance Map', 'Engineered asset layout designed to communicate multi-layer insulating performance visually.', ['Ultra-Thick High-Density Thermal Insulation Core', 'Leakproof Wipe-Clean Anti-Microbial Foil Lining', 'Heavy-Duty Dual Tensile Cross-Stitched Carrying Straps'])">
-                <div class="image-frame">
-                    <img src="5.jpg" alt="iStorm Insulated" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Product Marketing</div>
-                        <div>Order: 05</div>
-                    </div>
-                    <h4>iStorm Food Utility</h4>
-                    <p>Performance callouts mapping functional specifications inside thermal insulation boundaries.</p>
-                    <div class="tag-pool">
-                        <span>Thermal Infographics</span><span>Data Callouts</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6: Peri Peri Quinoa -->
-            <div class="cyber-card" onclick="openProject('Peri Peri Quinoa Chips', 'Food Packaging Grid', 'Vibrant, flavor-forward canister configuration using bright visual hierarchies to capture target market segments.', ['Premium Grade Crispy Makhana Base Blend Art', 'Dynamic Roasted Pepper Visual Vector Elements', 'Zero Greasy Residue Integrated Purity Icon'])">
-                <div class="image-frame">
-                    <img src="6.jpg" alt="Peri Peri Quinoa" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>F&amp;B Pack Architecture</div>
-                        <div>Order: 06</div>
-                    </div>
-                    <h4>Peri Peri Quinoa Chips</h4>
-                    <p>High-contrast alternative healthy snack structures balancing flavor themes with geometric nutrition seals.</p>
-                    <div class="tag-pool">
-                        <span>Color Block</span><span>Purity Graphics</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7: Salted Beetroot -->
-            <div class="cyber-card" onclick="openProject('Salted Beetroot Strips', 'Organic Label Architecture', 'Deep magenta color block architectures that frame natural root vegetable profiles with high-contrast text layers.', ['Bold 80% Pure Beetroot Pulp Infusion Callout', 'Clean Plant-Based Processing Certification Graphics', 'Highly Digestible Dietary Fiber Informational Grid'])">
-                <div class="image-frame">
-                    <img src="7.jpg" alt="Salted Beetroot" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>F&amp;B Pack Architecture</div>
-                        <div>Order: 07</div>
-                    </div>
-                    <h4>Salted Beetroot Strips</h4>
-                    <p>Minimalist organic labeling architectures designed for maximum shelf contrast and consumer trust layout.</p>
-                    <div class="tag-pool">
-                        <span>Earthy Palettes</span><span>Type System</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8: Wayanad Cardamom -->
-            <div class="cyber-card" onclick="openProject('Wayanad Cardamom Chai', 'Artisan Label Configuration', 'Authentic geographic-specific label art layout showcasing natural origin criteria.', ['Garden Freshest Tea Circular Stamp Overlay', 'Synthetic-Free 100% Pure Production Layout', 'Cardamom Pod Natural Graphic Highlights'])">
-                <div class="image-frame">
-                    <img src="8.jpg" alt="Wayanad Cardamom" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Wellness &amp; Beverage</div>
-                        <div>Order: 08</div>
-                    </div>
-                    <h4>Wayanad Cardamom Chai</h4>
-                    <p>Premium tea blending labels framing artisan heritage profiles using symmetrical technical typography circles.</p>
-                    <div class="tag-pool">
-                        <span>Heritage Stamp</span><span>Linear Paths</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 9: Neotea Mimosa -->
-            <div class="cyber-card" onclick="openProject('Neotea Mimosa Pudica', 'Clinical Herbal Layout', 'Structured multi-column packaging alignment balancing safety guidelines with traditional herbal values.', ['100% Natural Thotta Sinungi Powder Specifications', 'Ultra-Fine Milled Layouts For Mix Representation', 'Strict Non-GMO &amp; Organic Verification Seals'])">
-                <div class="image-frame">
-                    <img src="9.jpg" alt="Neotea Mimosa" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Holistic Labeling</div>
-                        <div>Order: 09</div>
-                    </div>
-                    <h4>Neotea Mimosa Pudica</h4>
-                    <p>Clean corporate health grids focused on communicating botanical raw purity and clear technical consumer directions.</p>
-                    <div class="tag-pool">
-                        <span>Usage Matrix</span><span>Data Grids</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 10: Peach Blossom -->
-            <div class="cyber-card" onclick="openProject('Peach Blossom Streetwear', 'Asymmetric Lookbook Format', 'Dynamic layout formats inspired by hip-hop lookbooks to capture young trend-oriented demographics.', ['Bold 100% Breathable Cotton Material Layout Callouts', 'Asymmetric Minimalist Typography Spacing Hierarchies', 'Rich Screen-Print Graphic Center Placements'])">
-                <div class="image-frame">
-                    <img src="10.jpg" alt="Peach Blossom Streetwear" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Apparel Marketing</div>
-                        <div>Order: 10</div>
-                    </div>
-                    <h4>Peach Blossom Apparel</h4>
-                    <p>Oversized streetwear apparel promotion layout maximizing loose structural fit visualization fields.</p>
-                    <div class="tag-pool">
-                        <span>Editorial Poster</span><span>B2C Strategy</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 11: Kart Black Trousers -->
-            <div class="cyber-card" onclick="openProject('Kart Black Trousers', 'Utilitarian Feature Poster', 'Balancing lifestyle comfort layouts with functional component details securely on an integrated page grid.', ['Reinforced Secure Zip Pocket Component Blueprints', 'Double-Stitch Fade Resistant Fabric Callout Blocks', 'Dual Side Comfort Geometry Indicators'])">
-                <div class="image-frame">
-                    <img src="11.jpg" alt="Kart Black Trousers" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Apparel Marketing</div>
-                        <div>Order: 11</div>
-                    </div>
-                    <h4>Kart Black Trousers</h4>
-                    <p>Clean utilitarian promotional structure highlighting cross-functional usage parameters across active environments.</p>
-                    <div class="tag-pool">
-                        <span>Feature Map</span><span>Technical Spec</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 12: Timber Drive -->
-            <div class="cyber-card" onclick="openProject('Timber Drive Collectibles', 'Artisan Space Catalog', 'Shifting simple wooden toy layouts into luxury corporate desk sculpture catalog segments.', ['Hand-Sanded Sustainable Hardwood Blueprint Track', 'Non-Toxic Safe Organic Stain Certification Badging', 'Premium Home Gallery Decor Accent Framing'])">
-                <div class="image-frame">
-                    <img src="12.jpg" alt="Timber Drive Toys" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Catalog Editorial</div>
-                        <div>Order: 12</div>
-                    </div>
-                    <h4>Timber Drive Collectibles</h4>
-                    <p>Generous negative space execution displaying premium artisan craftsmanship metrics beautifully.</p>
-                    <div class="tag-pool">
-                        <span>White Space</span><span>E-Commerce Print</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 13: Terracotta Bell -->
-            <div class="cyber-card" onclick="openProject('Artisan Terracotta Bell', 'Dimensional Data Blueprint', 'Dimension-led documentation charts assisting online consumers in visualizing real space layout attributes.', ['Genuine Kiln-Fired Terracotta Earthware Composition', 'Tiered Clay Layout Multi-Arrangement Dimensions', 'Scale Blueprint Interaction Blueprint Lines'])">
-                <div class="image-frame">
-                    <img src="13.jpg" alt="Terracotta Bell Blueprint" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Product Blueprint</div>
-                        <div>Order: 13</div>
-                    </div>
-                    <h4>Artisan Terracotta Bell</h4>
-                    <p>Terracotta home accents tracking systems balancing structural dimensions with traditional handcrafted data sets.</p>
-                    <div class="tag-pool">
-                        <span>Dimension Lines</span><span>Scale Layout</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 14: DotCom Bunny -->
-            <div class="cyber-card" onclick="openProject('DotCom Bunny Nightlight', 'Hardware Interface Icons', 'Simplifying complex device specifications into responsive micro-feature icons.', ['Soft BPA-Free Food-Grade Silicone Texture Tags', 'Tap-Control Multi-Color LED Spectrum Matrix Map', 'Type-C Rapid Charging Performance Parameters'])">
-                <div class="image-frame">
-                    <img src="14.jpg" alt="DotCom Bunny Light" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Consumer Tech Graphics</div>
-                        <div>Order: 14</div>
-                    </div>
-                    <h4>DotCom Bunny Light</h4>
-                    <p>Interactive feature hierarchy maps layout optimizing user experience steps for parents and kids.</p>
-                    <div class="tag-pool">
-                        <span>UX Icon Systems</span><span>Safety Badges</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 15: GMR Cap -->
-            <div class="cyber-card" onclick="openProject('GMR Performance Cap', 'Athletic Tech Spec Grid', 'High-energy athletic accessory layout communicating advanced moisture absorption matrices.', ['Aero-Weave Moisture-Wicking Premium Material Layout', 'Thermal-Regulating Flat-Lock Interior Seam Charts', 'UV &amp; Sweat Weather-Resistant Boundary Seals'])">
-                <div class="image-frame">
-                    <img src="15.jpg" alt="GMR Performance Cap" onerror="this.style.display='none';">
-                </div>
-                <div class="card-body">
-                    <div class="card-head-meta">
-                        <div>Consumer Tech Graphics</div>
-                        <div>Order: 15</div>
-                    </div>
-                    <h4>GMR Performance Cap</h4>
-                    <p>Tactical skull cap configuration blueprints emphasizing weather resistance parameters during extreme activity.</p>
-                    <div class="tag-pool">
-                        <span>Material Analytics</span><span>Thermal Control</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Overlay Details Engine -->
-    <div class="cyber-modal" id="projectModal" onclick="dismissModalOutside(event)">
-        <div class="modal-box">
-            <button class="exit-btn" onclick="closeProject()"><i class="fa-solid fa-square-xmark"></i></button>
-            <div class="modal-tag" id="modalTag">Execution Parameters</div>
-            <h2 class="modal-title" id="modalTitle">Project Domain</h2>
-            <p class="modal-info" id="modalDesc">Detailed process description mapping text.</p>
-            <div class="spec-list-title">Core Architecture Executed</div>
-            <ul class="bullet-stack" id="modalBullets">
-                <!-- Script renders info lines dynamically here -->
-            </ul>
-        </div>
+        <div class="cinema-bar-bottom"></div>
     </div>
 
-    <!-- Contact & Footer Blueprint Matrix -->
-    <footer id="contact">
-        <h2>Initiate Collaborative Projects</h2>
-        <p>Currently executing cross-medium branding operations, technical blueprints, and package optimization modules.</p>
-        <div class="socials">
-            <a href="mailto:skdharani2004@gmail.com" title="Email Communication"><i class="fa-solid fa-envelope"></i></a>
-            <a href="#" target="_blank" title="Behance Network"><i class="fa-brands fa-behance"></i></a>
-            <a href="#" target="_blank" title="LinkedIn Professional Network"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://github.com/sk75656" target="_blank" title="GitHub Storage Pipeline"><i class="fa-brands fa-github"></i></a>
+    <!-- Active Main Framework Container -->
+    <div id="core-system-wrapper">
+        <div class="ambient-starfield"></div>
+        <div class="glow-nodes"></div>
+
+        <!-- Premium Menu Bar Links -->
+        <nav>
+            <a href="#" class="nav-identity">DHARANI<span>.</span>SYSTEMS</a>
+            <div class="nav-menu">
+                <a href="#work" class="active">Index Matrix</a>
+                <a href="#contact">Terminal Connect</a>
+            </div>
+        </nav>
+
+        <!-- Anamorphic Hero Area -->
+        <header>
+            <div class="architecture-tag">Electronics Engineer &amp; Assets Architect</div>
+            <h1><span>Precision Engineering meets high-end</span> <em>Brand Layout Architecture.</em></h1>
+            <p>Synthesizing technical criteria from my background in Electronics &amp; Communication Engineering (VCET) with scalable commercial layouts executed inside Adobe Illustrator, Photoshop, and UI blueprint modules[cite: 2].</p>
+            <div class="action-cluster">
+                <a href="#work" class="action-trigger">Access Workspace</a>
+            </div>
+        </header>
+
+        <!-- Technical Integration Strip -->
+        <section class="matrix-metrics">
+            <div class="metric-cell">
+                <h4>// Adobe Creative Systems</h4>
+                <p>Advanced brand typography configurations, structural composition assets, and physical retail die-lines generated via vector layers[cite: 2].</p>
+            </div>
+            <div class="metric-cell">
+                <h4>// Hardware System Dynamics</h4>
+                <p>Translating system specifications, block architecture diagrams, and hardware automation logic securely into product-ready assets[cite: 2].</p>
+            </div>
+            <div class="metric-cell">
+                <h4>// Interface Analytics</h4>
+                <p>Assembling functional interface concepts inside clean digital design ecosystems utilizing Penpot, Python libraries, and Power BI matrices[cite: 2].</p>
+            </div>
+        </section>
+
+        <!-- Portfolio Showcase Index -->
+        <section class="workspace-deck" id="work">
+            <div class="deck-header">
+                <h2>Workspace Index</h2>
+                <p>A systematic register of individual layouts, architectural package labels, and hardware spec matrices.</p>
+            </div>
+            
+            <div class="showcase-grid">
+                
+                <!-- CARD 1: SMART GLASSES ASSISTANT SYSTEM -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Smart Glasses Assistant System', 'Embedded Engineering Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters[cite: 2].', ['Embedded camera modules with live ultrasonic sensor mapping arrays[cite: 2]', 'Vibrational haptic nodes paired with synchronized audio indicators[cite: 2]', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines[cite: 2]'])">
+                        <!-- Embedded SVG Schematics work as beautiful structural fallbacks until image is live -->
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        <img src="1.jpg" alt="Smart Glasses Layout" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 01</div>
+                            <div>VCET Capstone</div>
+                        </div>
+                        <h3>Smart Glasses System</h3>
+                        <p>Object detection and footboard prevention hardware layout engineered for optimal visual impairment safety parameters[cite: 2].</p>
+                        <div class="card-chip-set">
+                            <span>Arduino IDE</span><span>Ultrasonic Sensor</span><span>Haptics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: OUTRIDER RUCKSACK -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Outrider 40L Rucksack', 'Technical Product Strategy', 'Conquer Outdoor with absolute tactical capacity. Engineered for wild terrains and professional cross-mountain utility layouts.', ['Diamond-Ripstop Weatherproof Fabric Layering', 'Integrated External Webbing &amp; Multi-Point Compression', 'Dual-Density Ergonomic Shoulder Harness System Layout'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+                        <img src="2.jpg" alt="Outrider Rucksack" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 02</div>
+                            <div>Technical Apparel</div>
+                        </div>
+                        <h3>Outrider 40L Rucksack</h3>
+                        <p>Structured asset configuration highlighting weatherproofing stability indices and multi-zone organizational graphics.</p>
+                        <div class="card-chip-set">
+                            <span>Illustrator Vector</span><span>Tech Spec Mapping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: TRAVEL TO DESIRE -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Travel to Desire 45L', 'Tactical Carrier Blueprint', 'Designed for modern digital nomads demanding secure device integration and high capacity execution paths.', ['180° Clamshell Laptop Vault Alignment', 'Ventilated Isolated Shoe &amp; Laundry Bay Design', 'Scratch-Resistant Micro-Fleece Tech Spaces'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16l4-4-4-4M8 12h8"/></svg>
+                        <img src="3.jpg" alt="Travel to Desire" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 03</div>
+                            <div>Travel Infrastructure</div>
+                        </div>
+                        <h3>Travel to Desire 45L</h3>
+                        <p>High-capacity workflow blueprints targeting deep technical device organization parameters cleanly.</p>
+                        <div class="card-chip-set">
+                            <span>Component Systems</span><span>Vector Die-Lines</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4: URBAN HANDBAG COLLECTION -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Urban Handbag Collection', 'Minimalist Premium Grid', 'Sleek, fluid lifestyle layouts demonstrating how technical waterproof protection fits into elegant street aesthetics.', ['High-Grade Matte Waterproof Polyester Weave', 'Hidden Magnetic Structural Closures', 'Subtle Metallic Embossed Branding Accents'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 3h18v18H3zM21 9H3M21 15H3M9 3v18M15 3v18"/></svg>
+                        <img src="4.jpg" alt="Urban Handbags" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 04</div>
+                            <div>Lifestyle Utility</div>
+                        </div>
+                        <h3>Urban Handbag Series</h3>
+                        <p>Clean asymmetric layouts prioritizing structural design aesthetics, surface textures, and metallic branding fields.</p>
+                        <div class="card-chip-set">
+                            <span>Minimalist Geometry</span><span>Asset Framing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 5: ISTORM INSULATED FOOD UTILITY -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('iStorm Food Utility', 'Thermal Performance Map', 'Engineered asset layout designed to communicate multi-layer insulating performance visually.', ['Ultra-Thick High-Density Thermal Insulation Core', 'Leakproof Wipe-Clean Anti-Microbial Foil Lining', 'Heavy-Duty Dual Tensile Cross-Stitched Carrying Straps'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <img src="5.jpg" alt="iStorm Insulated" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 05</div>
+                            <div>Product Marketing</div>
+                        </div>
+                        <h3>iStorm Food Utility</h3>
+                        <p>Performance callouts mapping functional core specifications inside multi-layer thermal insulation boundaries.</p>
+                        <div class="card-chip-set">
+                            <span>Thermal Infographics</span><span>Data Callouts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 6: PERI PERI QUINOA CHIPS -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Peri Peri Quinoa Chips', 'Food Packaging Grid', 'Vibrant, flavor-forward canister configuration using bright visual hierarchies to capture target market segments.', ['Premium Grade Crispy Makhana Base Blend Art', 'Dynamic Roasted Pepper Visual Vector Elements', 'Zero Greasy Residue Integrated Purity Icon'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+                        <img src="6.jpg" alt="Peri Peri Quinoa" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 06</div>
+                            <div>F&amp;B Architecture</div>
+                        </div>
+                        <h3>Peri Peri Quinoa Chips</h3>
+                        <p>High-contrast alternative healthy snack structures balancing flavor themes with geometric nutrition seals.</p>
+                        <div class="card-chip-set">
+                            <span>Color Blocking</span><span>Purity Assets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 7: SALTED BEETROOT STRIPS -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Salted Beetroot Strips', 'Organic Label Architecture', 'Deep magenta color block architectures that frame natural root vegetable profiles with high-contrast text layers.', ['Bold 80% Pure Beetroot Pulp Infusion Callout', 'Clean Plant-Based Processing Certification Graphics', 'Highly Digestible Dietary Fiber Informational Grid'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        <img src="7.jpg" alt="Salted Beetroot" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 07</div>
+                            <div>F&amp;B Architecture</div>
+                        </div>
+                        <h3>Salted Beetroot Strips</h3>
+                        <p>Minimalist organic labeling architectures designed for maximum shelf contrast and consumer trust layout frameworks.</p>
+                        <div class="card-chip-set">
+                            <span>Earthy Palettes</span><span>Type System</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 8: WAYANAD CARDAMOM CHAI -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Wayanad Cardamom Chai', 'Artisan Label Configuration', 'Authentic geographic-specific label art layout showcasing natural origin criteria.', ['Garden Freshest Tea Circular Stamp Overlay', 'Synthetic-Free 100% Pure Production Layout', 'Cardamom Pod Natural Graphic Highlights'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                        <img src="8.jpg" alt="Wayanad Cardamom" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 08</div>
+                            <div>Wellness Blends</div>
+                        </div>
+                        <h3>Wayanad Cardamom Chai</h3>
+                        <p>Premium tea blending labels framing artisan heritage profiles using symmetrical technical typography paths.</p>
+                        <div class="card-chip-set">
+                            <span>Heritage Stamp</span><span>Linear Aesthetics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 9: NEOTEA MIMOSA PUDICA -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Neotea Mimosa Pudica', 'Clinical Herbal Layout', 'Structured multi-column packaging alignment balancing safety guidelines with traditional herbal values.', ['100% Natural Thotta Sinungi Powder Specifications', 'Ultra-Fine Milled Layouts For Mix Representation', 'Strict Non-GMO &amp; Organic Verification Seals'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>
+                        <img src="9.jpg" alt="Neotea Mimosa" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 09</div>
+                            <div>Holistic Systems</div>
+                        </div>
+                        <h3>Neotea Mimosa Pudica</h3>
+                        <p>Clean corporate health grids focused on communicating botanical raw purity and clear technical layout guides.</p>
+                        <div class="card-chip-set">
+                            <span>Usage Matrix</span><span>Data Layouts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 10: PEACH BLOSSOM APPAREL -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Peach Blossom Streetwear', 'Asymmetric Lookbook Format', 'Dynamic layout formats inspired by hip-hop lookbooks to capture young trend-oriented demographics.', ['Bold 100% Breathable Cotton Material Layout Callouts', 'Asymmetric Minimalist Typography Spacing Hierarchies', 'Rich Screen-Print Graphic Center Placements'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82zM7 7h.01"/></svg>
+                        <img src="10.jpg" alt="Peach Blossom" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 10</div>
+                            <div>Apparel Campaign</div>
+                        </div>
+                        <h3>Peach Blossom Shirt</h3>
+                        <p>Oversized streetwear apparel promotion layout maximizing loose structural fit visualization canvases cleanly.</p>
+                        <div class="card-chip-set">
+                            <span>Asymmetric Grid</span><span>Lookbook Build</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 11: KART BLACK UTILITY TROUSERS -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Kart Black Trousers', 'Utilitarian Feature Poster', 'Balancing lifestyle comfort layouts with functional component details securely on an integrated page grid.', ['Reinforced Secure Zip Pocket Component Blueprints', 'Double-Stitch Fade Resistant Fabric Callout Blocks', 'Dual Side Comfort Geometry Indicators'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        <img src="11.jpg" alt="Kart Black Trousers" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 11</div>
+                            <div>Apparel Campaign</div>
+                        </div>
+                        <h3>Kart Black Trousers</h3>
+                        <p>Utilitarian promotional layout systems highlighting structural performance parameters across active environments.</p>
+                        <div class="card-chip-set">
+                            <span>Feature Callouts</span><span>Grid Array</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 12: TIMBER DRIVE COLLECTIBLES -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Timber Drive Collectibles', 'Artisan Space Catalog', 'Shifting simple wooden toy layouts into luxury corporate desk sculpture catalog segments.', ['Hand-Sanded Sustainable Hardwood Blueprint Track', 'Non-Toxic Safe Organic Stain Certification Badging', 'Premium Home Gallery Decor Accent Framing'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l-7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+                        <img src="12.jpg" alt="Timber Drive Toys" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 12</div>
+                            <div>Catalog Editorial</div>
+                        </div>
+                        <h3>Timber Drive Collectibles</h3>
+                        <p>Generous negative space execution displaying premium artisan craftsmanship metrics across layout spreads.</p>
+                        <div class="card-chip-set">
+                            <span>Negative Space</span><span>Editorial Architecture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 13: ARTISAN TERRACOTTA BELL -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('Artisan Terracotta Bell', 'Dimensional Data Blueprint', 'Dimension-led documentation charts assisting online consumers in visualizing real space layout attributes.', ['Genuine Kiln-Fired Terracotta Earthware Composition', 'Tiered Clay Layout Multi-Arrangement Dimensions', 'Scale Blueprint Interaction Blueprint Lines'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                        <img src="13.jpg" alt="Terracotta Bell" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 13</div>
+                            <div>E-Commerce Spec</div>
+                        </div>
+                        <h3>Artisan Terracotta Bell</h3>
+                        <p>Artisan home decor dimension charts balancing spatial scaling vectors with structured layout lines.</p>
+                        <div class="card-chip-set">
+                            <span>Dimension Specs</span><span>Blueprint Scaling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 14: DOTCOM BUNNY NIGHTLIGHT -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('DotCom Bunny Nightlight', 'Hardware Interface Icons', 'Simplifying complex device specifications into responsive micro-feature icons.', ['Soft BPA-Free Food-Grade Silicone Texture Tags', 'Tap-Control Multi-Color LED Spectrum Matrix Map', 'Type-C Rapid Charging Performance Parameters'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <img src="14.jpg" alt="DotCom Bunny Light" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 14</div>
+                            <div>Consumer Hardware</div>
+                        </div>
+                        <h3>DotCom Bunny Light</h3>
+                        <p>User interaction flow charts optimizing functional operation steps for alternative digital appliances.</p>
+                        <div class="card-chip-set">
+                            <span>UX Chart Nodes</span><span>Feature Icons</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 15: GMR PERFORMANCE CAP -->
+                <div class="deck-card">
+                    <div class="deck-asset-window" onclick="openConsoleProject('GMR Performance Cap', 'Athletic Tech Spec Grid', 'High-energy athletic accessory layout communicating advanced moisture absorption matrices.', ['Aero-Weave Moisture-Wicking Premium Material Layout', 'Thermal-Regulating Flat-Lock Interior Seam Charts', 'UV &amp; Sweat Weather-Resistant Boundary Seals'])">
+                        <svg class="blueprint-fallback-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v22M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+                        <img src="15.jpg" alt="GMR Cap Spec" onerror="this.style.opacity='0';">
+                    </div>
+                    <div class="card-main-body">
+                        <div class="card-system-path">
+                            <div>System Profile: 15</div>
+                            <div>Consumer Hardware</div>
+                        </div>
+                        <h3>GMR Performance Cap</h3>
+                        <p>Tactical performance skull cap layouts mapping thermal configuration vectors and structural metrics.</p>
+                        <div class="card-chip-set">
+                            <span>Material Analytics</span><span>Thermal Control</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Command Console Pop-up Overlay Container -->
+        <div class="overlay-console" id="terminalModal" onclick="dismissConsoleOutside(event)">
+            <div class="console-frame">
+                <button class="terminal-kill" onclick="closeConsole()"><i class="fa-solid fa-rectangle-xmark"></i></button>
+                <div class="console-meta-tag" id="consoleTag">System Node Block</div>
+                <h2 class="console-header-title" id="consoleTitle">Execution Frame</h2>
+                <p class="console-explanation" id="consoleDesc">Process logs mapping fields dynamically.</p>
+                <div class="node-specification-header">Strategic Visual Blueprint</div>
+                <ul class="spec-bullet-tree" id="consoleBullets">
+                    <!-- Script prints bullet arrays dynamically here -->
+                </ul>
+            </div>
         </div>
-    </footer>
+
+        <!-- Terminal Communications Footer -->
+        <footer id="contact">
+            <h2>Initiate System Operations</h2>
+            <p>Ready to deploy high-end layout strategies, responsive package die-lines, and interactive product charts.</p>
+            <div class="terminal-connections">
+                <a href="mailto:skdharani2004@gmail.com" title="Direct Email Transmission"><i class="fa-solid fa-terminal"></i></a>
+                <a href="https://github.com/sk75656" target="_blank" title="GitHub Storage Framework"><i class="fa-brands fa-github-alt"></i></a>
+                <a href="#" target="_blank" title="LinkedIn Professional Framework"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+        </footer>
+    </div>
 
     <script>
-        // High-Performance Intersection Animation Engine
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, lineIdx) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('revealed');
-                    }, lineIdx * 50); 
-                }
-            });
-        }, { threshold: 0.05 });
+        // CINEMATIC OVERLAY SEQUENCING LOGIC
+        window.addEventListener('DOMContentLoaded', () => {
+            // Trigger cinematic letterbox reveal timeline duration
+            setTimeout(() => {
+                const cinematicOverlay = document.getElementById('cinematic-engine');
+                cinematicOverlay.classList.add('dissolved');
+                document.body.classList.remove('cinematic-lock');
+            }, 3200);
+        });
 
-        document.querySelectorAll('.cyber-card').forEach((card) => scrollObserver.observe(card));
-
-        // Interactive Interface Controllers
-        function openProject(title, category, info, featuresArray) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalTag').innerText = category;
-            document.getElementById('modalDesc').innerText = info;
+        // Interactive HUD Console Controller Methods
+        function openConsoleProject(title, category, infoText, featuresList) {
+            document.getElementById('consoleTitle').innerText = title;
+            document.getElementById('consoleTag').innerText = `// ${category}`;
+            document.getElementById('consoleDesc').innerText = infoText;
             
-            const listFrame = document.getElementById('modalBullets');
-            listFrame.innerHTML = ''; 
+            const frameworkList = document.getElementById('consoleBullets');
+            frameworkList.innerHTML = ''; 
             
-            featuresArray.forEach(textLine => {
-                const stepNode = document.createElement('li');
-                stepNode.innerHTML = `<i class="fa-solid fa-square-rss"></i> <span>${textLine}</span>`;
-                listFrame.appendChild(stepNode);
+            featuresList.forEach(pointLine => {
+                const stepLine = document.createElement('li');
+                stepLine.innerHTML = `<i class="fa-solid fa-chevron-right"></i> <span>${pointLine}</span>`;
+                frameworkList.appendChild(stepLine);
             });
             
-            document.getElementById('projectModal').classList.add('active');
+            document.getElementById('terminalModal').classList.add('active');
             document.body.style.overflow = 'hidden'; 
         }
 
-        function closeProject() {
-            document.getElementById('projectModal').classList.remove('active');
+        function closeConsole() {
+            document.getElementById('terminalModal').classList.remove('active');
             document.body.style.overflow = 'auto'; 
         }
 
-        function dismissModalOutside(e) {
-            if (e.target.classList.contains('cyber-modal')) {
-                closeProject();
+        function dismissConsoleOutside(e) {
+            if (e.target.classList.contains('overlay-console')) {
+                closeConsole();
             }
         }
     </script>
