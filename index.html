@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DHARANI S K - PORTFOLIO</title>
-    <!-- Premium Google Fonts & Icon Frameworks -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Premium Google Fonts & System Icon Toolkits -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-void: #010306;
-            --panel-matrix: rgba(8, 12, 24, 0.5);
+            --bg-void: #010205;
+            --panel-matrix: rgba(6, 10, 23, 0.6);
             --neon-cyan: #06b6d4;
             --neon-blue: #3b82f6;
             --neon-purple: #7c3aed;
+            --neon-pink: #d946ef;
             --border-glow: rgba(6, 182, 212, 0.12);
             --text-main: #f8fafc;
             --text-muted: #475569;
@@ -42,8 +43,35 @@
         /* Smooth Cinematic Custom Scrollbar */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg-void); }
-        ::-webkit-scrollbar-thumb { background: #0b111e; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+        ::-webkit-scrollbar-thumb { background: #0c1222; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.1); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
+
+        /* Ambient Parallax Chroma Orbs */
+        .plasma-flare-1 {
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, rgba(6,182,212,0.01) 50%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            right: -100px;
+            z-index: -2;
+            pointer-events: none;
+            filter: blur(50px);
+        }
+
+        .plasma-flare-2 {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217,70,239,0.04) 0%, rgba(59,130,246,0.01) 50%, rgba(0,0,0,0) 70%);
+            bottom: -150px;
+            left: -150px;
+            z-index: -2;
+            pointer-events: none;
+            filter: blur(50px);
+        }
 
         /* ==========================================================================
            CINEMATIC BLEND HUD INTRO OVERLAY
@@ -99,17 +127,19 @@
         }
 
         .intro-title-block h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 8px;
             text-transform: uppercase;
             color: #fff;
         }
 
         .intro-title-block h1 span {
-            color: var(--neon-cyan);
-            text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
         }
 
         .intro-title-block p {
@@ -141,32 +171,36 @@
         }
 
         /* ==========================================================================
-           MAIN APPLICATION INTERFACE
+           MAIN PLATFORM DESIGN MODULES
            ========================================================================== */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 25px 10%;
-            background: rgba(1, 2, 4, 0.9);
-            backdrop-filter: blur(25px);
+            background: rgba(1, 2, 5, 0.85);
+            backdrop-filter: blur(30px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.01);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
         }
 
         .nav-brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
             letter-spacing: 2px;
             color: #fff;
             text-decoration: none;
         }
 
-        .nav-brand span { color: var(--neon-cyan); }
+        .nav-brand span {
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         .nav-routes a {
             color: #475569;
@@ -176,22 +210,22 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
 
         .nav-routes a:hover, .nav-routes a.active {
             color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
         }
 
-        /* Split Hero Area */
+        /* Split Hero Layout Grid */
         header {
-            min-height: 95vh;
+            min-height: 100vh;
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1.15fr 0.85fr;
             align-items: center;
-            padding: 100px 10% 40px 10%;
+            padding: 120px 10% 40px 10%;
             gap: 60px;
-            background: radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
         }
 
         .hero-statement-box {
@@ -201,46 +235,48 @@
         }
 
         .hero-matrix-flag {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 0.75rem;
             color: var(--neon-cyan);
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            border-left: 2px solid var(--neon-cyan);
+            margin-bottom: 25px;
+            border-left: 3px solid var(--neon-cyan);
             padding-left: 12px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         header h2 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 700;
-            line-height: 1.15;
+            line-height: 1.1;
             letter-spacing: -1.5px;
             margin-bottom: 25px;
         }
 
         header h2 span {
-            background: linear-gradient(135deg, #fff 40%, #475569);
+            background: linear-gradient(135deg, #fff 50%, #475569);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         header h2 em {
             font-style: normal;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 30px rgba(6, 182, 212, 0.25);
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.3));
         }
 
         header p {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: #94a3b8;
             line-height: 1.6;
             max-width: 620px;
         }
 
-        /* Portrait Control Rig Block */
+        /* Portrait Core Studio Rig Stack */
         .portrait-stack-rig {
             display: flex;
             flex-direction: column;
@@ -248,36 +284,50 @@
             width: 100%;
             opacity: 0;
             transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
         }
 
         #main-portfolio-content.ready .portrait-stack-rig {
             opacity: 1;
             transform: translateY(0);
-            transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
         }
 
         .hero-portrait-dock {
             background: var(--panel-matrix);
             border: 1px solid var(--border-glow);
-            border-radius: 6px;
-            height: 380px;
+            border-radius: 8px;
+            height: 400px;
             width: 100%;
             overflow: hidden;
             position: relative;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            backdrop-filter: blur(25px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(30px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
+        /* Cybernetic mesh lines backdrop layout */
         .hero-portrait-dock::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255,255,255,0.005) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.005) 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-image: linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 25px 25px;
             z-index: 1;
+        }
+
+        /* Dynamic Lighting Back-glow effect */
+        .hero-portrait-dock::after {
+            content: '';
+            position: absolute;
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
+            bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            transition: all 0.5s ease;
         }
 
         .hero-portrait-dock img {
@@ -289,15 +339,17 @@
             transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .hero-portrait-dock:hover img {
-            transform: scale(1.02);
-        }
+        /* Software-Based Lighting Rig Integrations[cite: 2] */
+        .portrait-stack-rig:has(.pr:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(234,88,12,0.3) 0%, transparent 70%); }
+        .portrait-stack-rig:has(.ai:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(255,145,0,0.3) 0%, transparent 70%); }
+        .portrait-stack-rig:has(.ps:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(2,132,199,0.3) 0%, transparent 70%); }
+        .portrait-stack-rig:has(.cv:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(0,196,204,0.3) 0%, transparent 70%); }
 
-        /* Animated Software Toolkit Modules[cite: 2] */
+        /* Dynamic Toolkit Badges[cite: 2] */
         .software-toolkit-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 14px;
             width: 100%;
         }
 
@@ -305,57 +357,57 @@
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 4px;
-            padding: 12px 5px;
+            padding: 14px 5px;
             text-align: center;
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             color: #cbd5e1;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            cursor: pointer;
         }
 
         .tool-node-chip i {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #475569;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
 
-        /* Individual Tool Highlight Colors */
         .tool-node-chip:hover {
             background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             color: #fff;
         }
-        .tool-node-chip.pr:hover { border-color: #ea580c; box-shadow: 0 0 15px rgba(234,88,12,0.15); }
-        .tool-node-chip.pr:hover i { color: #ea580c; }
-        .tool-node-chip.ai:hover { border-color: #ff9100; box-shadow: 0 0 15px rgba(255,145,0,0.15); }
-        .tool-node-chip.ai:hover i { color: #ff9100; }
-        .tool-node-chip.ps:hover { border-color: #0284c7; box-shadow: 0 0 15px rgba(2,132,199,0.15); }
-        .tool-node-chip.ps:hover i { color: #0284c7; }
-        .tool-node-chip.cv:hover { border-color: #00c4cc; box-shadow: 0 0 15px rgba(0,196,204,0.15); }
-        .tool-node-chip.cv:hover i { color: #00c4cc; }
+        .tool-node-chip.pr:hover { border-color: #ea580c; box-shadow: 0 0 20px rgba(234,88,12,0.3); }
+        .tool-node-chip.pr:hover i { color: #ea580c; text-shadow: 0 0 10px #ea580c; }
+        .tool-node-chip.ai:hover { border-color: #ff9100; box-shadow: 0 0 20px rgba(255,145,0,0.3); }
+        .tool-node-chip.ai:hover i { color: #ff9100; text-shadow: 0 0 10px #ff9100; }
+        .tool-node-chip.ps:hover { border-color: #0284c7; box-shadow: 0 0 20px rgba(2,132,199,0.3); }
+        .tool-node-chip.ps:hover i { color: #0284c7; text-shadow: 0 0 10px #0284c7; }
+        .tool-node-chip.cv:hover { border-color: #00c4cc; box-shadow: 0 0 20px rgba(0,196,204,0.3); }
+        .tool-node-chip.cv:hover i { color: #00c4cc; text-shadow: 0 0 10px #00c4cc; }
 
         /* ==========================================================================
-           CLEAN SYSTEMATIC CONTINUOUS IMAGE STREAM
+           CLEAN FULL-IMAGE PORTFOLIO STREAM (CHROMA PANEL EFFECT)
            ========================================================================== */
         .showcase-arena {
-            padding: 120px 10% 40px 10%;
+            padding: 140px 10% 40px 10%;
         }
 
         .arena-heading {
             max-width: 600px;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
 
         .arena-heading h3 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: -0.5px;
@@ -370,26 +422,28 @@
         .stream-column {
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 60px;
             max-width: 1050px;
             margin: 0 auto;
         }
 
         .stream-panel {
             width: 100%;
-            background-color: rgba(5, 8, 16, 0.5);
+            background-color: rgba(4, 6, 15, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.7);
             opacity: 0;
-            transform: translateY(40px) scale(0.98);
-            filter: blur(6px);
-            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                        transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                        filter 0.8s ease;
+            transform: translateY(60px) scale(0.96);
+            filter: blur(8px) brightness(0.6);
+            transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                        transform 1s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                        filter 1s ease,
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease;
             display: flex;
             will-change: transform, opacity, filter;
         }
@@ -397,12 +451,13 @@
         .stream-panel.active-view {
             opacity: 1;
             transform: translateY(0) scale(1);
-            filter: blur(0px);
+            filter: blur(0px) brightness(1);
         }
 
+        /* High-End Liquid Glow Border Transition */
         .stream-panel:hover {
-            border-color: rgba(6, 182, 212, 0.25);
-            box-shadow: 0 20px 50px rgba(6, 182, 212, 0.08);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 30px 60px rgba(6, 182, 212, 0.12);
         }
 
         .stream-panel img {
@@ -410,35 +465,41 @@
             height: auto;
             display: block;
             object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .stream-panel:hover img {
+            transform: scale(1.008);
         }
 
         /* ==========================================================================
-           CINEMATIC VIDEO PROJECTION STATION (INSTAGRAM LINKS EMBEDDED)
+           CINEMATIC MOTION THEATER — VIDEO 1 & VIDEO 2
            ========================================================================== */
         .video-projection-station {
-            padding: 80px 10% 120px 10%;
+            padding: 100px 10% 140px 10%;
             border-top: 1px solid rgba(255,255,255,0.01);
         }
 
         .video-deck-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
+            gap: 45px;
             max-width: 1050px;
             margin: 0 auto;
         }
 
         .video-monitor-card {
-            background: rgba(4, 7, 15, 0.6);
+            background: rgba(3, 5, 12, 0.7);
             border: 1px solid rgba(255,255,255,0.02);
-            border-radius: 4px;
-            padding: 20px;
+            border-radius: 6px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
         .video-monitor-card.active-view {
@@ -447,28 +508,38 @@
         }
 
         .video-monitor-card:hover {
-            border-color: rgba(124, 58, 237, 0.25);
-            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.05);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 25px 55px rgba(139, 92, 246, 0.1);
         }
 
         .monitor-header-path {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 900;
             color: var(--neon-purple);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Clean Anamorphic Embedded Link Frame Mechanics */
+        .monitor-header-path::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-purple);
+        }
+
         .video-anchor-frame {
             width: 100%;
-            height: 380px;
+            height: 440px;
             background: #000;
-            border-radius: 2px;
+            border-radius: 4px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.01);
         }
 
         .video-anchor-frame iframe {
@@ -480,7 +551,7 @@
         }
 
         /* ==========================================================================
-           DYNAMIC LIGHTBOX MODALS
+           DYNAMIC TERMINAL LIGHTBOX MODALS
            ========================================================================== */
         .terminal-lightbox {
             position: fixed;
@@ -488,15 +559,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(2, 3, 6, 0.97);
-            backdrop-filter: blur(20px);
+            background: rgba(1, 2, 4, 0.98);
+            backdrop-filter: blur(25px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.35s ease;
             padding: 30px;
         }
 
@@ -506,19 +577,20 @@
         }
 
         .lightbox-panel {
-            background: #080d1a;
-            border: 1px solid rgba(6, 182, 212, 0.25);
+            background: #050812;
+            border: 1px solid rgba(6, 182, 212, 0.3);
             max-width: 680px;
             width: 100%;
-            border-radius: 4px;
+            border-radius: 6px;
             padding: 45px;
             position: relative;
-            transform: translateY(15px);
-            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: translateY(25px) scale(0.98);
+            transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.15);
         }
 
         .terminal-lightbox.active .lightbox-panel {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .lightbox-kill-btn {
@@ -536,10 +608,10 @@
         .lightbox-kill-btn:hover { color: var(--neon-cyan); }
 
         .panel-meta-tag {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             color: var(--neon-purple);
-            font-size: 0.7rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 900;
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 12px;
@@ -561,7 +633,7 @@
         }
 
         .panel-list-header {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -592,18 +664,19 @@
         }
 
         /* ==========================================================================
-           CONSOLIDATED COMMUNICATIONS CORE FOOTER
+           CONSOLIDATED SYSTEM CONSOLE FOOTER
            ========================================================================== */
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.02);
-            padding: 100px 10% 90px 10%;
+            padding: 110px 10% 90px 10%;
             text-align: center;
-            background: #010204;
+            background: #010103;
         }
 
         footer h4 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.8rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
             margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: -0.5px;
@@ -612,54 +685,55 @@
         footer p {
             color: #475569;
             font-size: 0.95rem;
-            margin-bottom: 45px;
+            margin-bottom: 50px;
         }
 
         .footer-action-deck {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 30px;
         }
 
-        /* Consolidated Download Block */
+        /* Resume Action Download Link */
         .resume-download-btn {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             background: transparent;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 45px;
+            font-size: 0.8rem;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
             text-decoration: none;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border-radius: 4px;
+            background: linear-gradient(135deg, rgba(6,182,212,0.02), rgba(124,58,237,0.02));
         }
 
         .resume-download-btn i {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--neon-cyan);
             transition: transform 0.3s ease;
         }
 
         .resume-download-btn:hover {
             border-color: var(--neon-cyan);
-            background: rgba(6, 182, 212, 0.04);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
-            transform: translateY(-2px);
+            background: rgba(6, 182, 212, 0.05);
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
+            transform: translateY(-3px);
         }
 
         .resume-download-btn:hover i { transform: translateY(3px); }
 
-        /* Integrated Channels Grid */
+        /* Unified Pipeline Channels Group */
         .comms-channel-bridge {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             margin-top: 10px;
         }
 
@@ -671,18 +745,18 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            border: 1px solid rgba(255,255,255,0.03);
-            background: rgba(255,255,255,0.005);
-            padding: 12px 25px;
-            border-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.003);
+            padding: 15px 30px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             transition: all 0.3s ease;
         }
 
         .comms-channel-bridge a i {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #475569;
             transition: color 0.3s;
         }
@@ -690,24 +764,25 @@
         .comms-channel-bridge a:hover {
             color: #fff;
             border-color: var(--neon-blue);
-            background: rgba(59, 130, 246, 0.04);
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
         }
 
-        .comms-channel-bridge a:hover i { color: var(--neon-blue); }
+        .comms-channel-bridge a:hover i { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
 
         @media(max-width: 992px) {
-            header { grid-template-columns: 1fr; text-align: center; justify-items: center; padding-top: 120px; }
+            header { grid-template-columns: 1fr; text-align: center; justify-items: center; padding-top: 140px; }
             header h2 { font-size: 3rem; }
             header p { margin: 0 auto; }
             .portrait-stack-rig { max-width: 420px; }
             .video-deck-grid { grid-template-columns: 1fr; }
-            .video-anchor-frame { height: 440px; }
+            .video-anchor-frame { height: 460px; }
         }
 
         @media(max-width: 768px) {
             header h2 { font-size: 2.3rem; }
-            .intro-title-block h1 { font-size: 1.6rem; letter-spacing: 3px; }
+            .intro-title-block h1 { font-size: 1.8rem; letter-spacing: 4px; }
             .lightbox-panel { padding: 35px 20px; }
             .comms-channel-bridge { flex-direction: column; width: 100%; }
             .comms-channel-bridge a { width: 100%; justify-content: center; }
@@ -717,10 +792,13 @@
 </head>
 <body class="lock-intro">
 
+    <div class="plasma-flare-1"></div>
+    <div class="plasma-flare-2"></div>
+
     <!-- Immersive Silhouette Image Loader Overlay -->
     <div id="cinematic-loader">
         <div class="intro-silhouette-frame">
-            <img src="profile .png" alt="Dharani SK Silhouette Matrix" markdown="0">
+            <img src="profile .png" alt="Dharani SK Space Matrix">
         </div>
         <div class="intro-title-block">
             <h1>Dharani<span> SK</span></h1>
@@ -728,10 +806,10 @@
         </div>
     </div>
 
-    <!-- Active Structural Frame -->
+    <!-- Active Main Framework Container -->
     <div id="main-portfolio-content">
         
-        <!-- Navigation Bar Links -->
+        <!-- Navigation Menu Controls -->
         <nav>
             <a href="#" class="nav-brand">DHARANI<span>.</span>STUDIOS</a>
             <div class="nav-routes">
@@ -740,7 +818,7 @@
             </div>
         </nav>
 
-        <!-- Dynamic Split Hero Frame -->
+        <!-- Dynamic Split Hero Spread -->
         <header>
             <div class="hero-statement-box">
                 <div class="hero-matrix-flag">Electronics Engineer &amp; Graphic Designer</div>
@@ -748,23 +826,23 @@
                 <p>Fusing the systemic logic and technical precision of an Electronics &amp; Communication Engineering background (VCET) with high-converting brand layouts generated via clean geometry vectors and structured creative software assets[cite: 2].</p>
             </div>
             
-            <!-- Unified Portrait & Control Rig Module -->
+            <!-- Unified Portrait & Interactive Tool Deck -->
             <div class="portrait-stack-rig">
                 <div class="hero-portrait-dock">
-                    <img src="profile .png" alt="Dharani SK Graphic Architect" markdown="0">
+                    <img src="profile .png" alt="Dharani SK Production Master" markdown="0">
                 </div>
-                <!-- Creative Software Module Under Cutout Image[cite: 2] -->
+                <!-- Creative Software Badges Block under Portrait Layout[cite: 2] -->
                 <div class="software-toolkit-bar">
-                    <div class="tool-node-chip pr" title="Adobe Premiere Pro Asset Skills[cite: 2]">
+                    <div class="tool-node-chip pr" title="Adobe Premiere Pro Skills Studio[cite: 2]">
                         <i class="fa-solid fa-video"></i>Pr
                     </div>
-                    <div class="tool-node-chip ai" title="Adobe Illustrator Asset Skills[cite: 2]">
+                    <div class="tool-node-chip ai" title="Adobe Illustrator Skills Studio[cite: 2]">
                         <i class="fa-solid fa-bezier-curve"></i>Ai
                     </div>
-                    <div class="tool-node-chip ps" title="Adobe Photoshop Asset Skills[cite: 2]">
+                    <div class="tool-node-chip ps" title="Adobe Photoshop Skills Studio[cite: 2]">
                         <i class="fa-solid fa-palette"></i>Ps
                     </div>
-                    <div class="tool-node-chip cv" title="Canva Studio Asset Skills">
+                    <div class="tool-node-chip cv" title="Canva Creative Suite Engine">
                         <i class="fa-solid fa-sparkles"></i>Cn
                     </div>
                 </div>
@@ -780,7 +858,7 @@
             
             <div class="stream-column">
                 
-                <!-- SMART GLASSES ADVISORY MATRIX NODE FROM CV[cite: 2] -->
+                <!-- HARDWARE ADVISORY SYSTEM NO 01 FROM INTERACTIVE CV[cite: 2] -->
                 <div class="stream-panel" onclick="launchLightbox('Smart Glasses Assistant System', 'Embedded Engineering Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters[cite: 2].', ['Embedded camera modules with live ultrasonic sensor mapping arrays[cite: 2]', 'Vibrational haptic nodes paired with synchronized audio indicators[cite: 2]', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines[cite: 2]'])">
                     <img src="1.jpg" alt="Smart Glasses Automation Interface Layout[cite: 2]">
                 </div>
@@ -840,17 +918,17 @@
                     <img src="12.jpg" alt="Timber Drive Toy Collectible Promotional Catalog Spread">
                 </div>
 
-                <!-- SLIDE 13 -->
+                <!-- SYSTEM CASE 13 -->
                 <div class="stream-panel" onclick="launchLightbox('Artisan Terracotta Bell', 'Dimensional Data Blueprint', 'Dimension-led documentation charts assisting online consumers in visualizing real space layout attributes.', ['Genuine Kiln-Fired Terracotta Earthware Composition', 'Tiered Clay Layout Multi-Arrangement Dimensions', 'Scale Blueprint Interaction Blueprint Lines'])">
                     <img src="13.jpg" alt="Artisan Terracotta Bell Sizing Schematic Chart Layout">
                 </div>
 
-                <!-- SLIDE 14 -->
+                <!-- SYSTEM CASE 14 -->
                 <div class="stream-panel" onclick="launchLightbox('DotCom Bunny Nightlight', 'Hardware Interface Icons', 'Simplifying complex device specifications into responsive micro-feature icons.', ['Soft BPA-Free Food-Grade Silicone Texture Tags', 'Tap-Control Multi-Color LED Spectrum Matrix Map', 'Type-C Rapid Charging Performance Parameters'])">
                     <img src="14.jpg" alt="DotCom Bunny Electronic Appliance Feature Grid Layout">
                 </div>
 
-                <!-- SLIDE 15 -->
+                <!-- SYSTEM CASE 15 -->
                 <div class="stream-panel" onclick="launchLightbox('GMR Performance Cap', 'Athletic Tech Spec Grid', 'High-energy athletic accessory layout communicating advanced moisture absorption matrices.', ['Aero-Weave Moisture-Wicking Premium Material Layout', 'Thermal-Regulating Flat-Lock Interior Seam Charts', 'UV &amp; Sweat Weather-Resistant Boundary Seals'])">
                     <img src="15.jpg" alt="GMR Skull Cap Performance Fabric Specification Layout">
                 </div>
@@ -858,24 +936,24 @@
             </div>
         </section>
 
-        <!-- Cinematic Video Projection sub-station (Instagram Integration Layout) -->
+        <!-- Cinematic Video Stage -->
         <section class="video-projection-station">
             <div class="arena-heading">
                 <h3>Motion Workspaces</h3>
-                <p>Evaluating continuous visual video narratives, pacing modules, and dynamic video content deployments.</p>
+                <p>Evaluating video sequence structures, layout timing parameters, and social production assets cleanly.</p>
             </div>
             
             <div class="video-deck-grid">
                 <!-- Video Monitor 01 -->
                 <div class="video-monitor-card">
-                    <div class="monitor-header-path">// Motion Spec: Volume 01</div>
+                    <div class="monitor-header-path">Motion Spec: Video 1</div>
                     <div class="video-anchor-frame">
                         <iframe src="https://www.instagram.com/reel/C-xdx8oPkMr/embed/" allowtransparency="true" scrolling="no" frameborder="0"></iframe>
                     </div>
                 </div>
                 <!-- Video Monitor 02 -->
                 <div class="video-monitor-card">
-                    <div class="monitor-header-path">// Motion Spec: Volume 02</div>
+                    <div class="monitor-header-path">Motion Spec: Video 2</div>
                     <div class="video-anchor-frame">
                         <iframe src="https://www.instagram.com/reel/DNC0SuqP8SW/embed/" allowtransparency="true" scrolling="no" frameborder="0"></iframe>
                     </div>
@@ -897,7 +975,7 @@
             </div>
         </div>
 
-        <!-- Terminal Connect Networks / Consolidated Download Footer -->
+        <!-- Consolidated Command Footer -->
         <footer id="contact">
             <h4>Dharani S K Workspace Terminal</h4>
             <p>E-Commerce Assets • Packaging Engineering • Motion Graphics Pipelines[cite: 2]</p>
@@ -921,7 +999,7 @@
         </footer>
     </div>
 
-    <script>
+    <script {nonce}>
         // CINEMATIC OVERLAY REVEAL CONTROLLER
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
@@ -932,21 +1010,21 @@
                 coreWrapper.classList.add('ready');
                 document.body.classList.remove('lock-intro');
                 
-                // Initialize clean scroll observers once intro layer clears out
+                // Initialize scroll observers once intro layer clears out
                 document.querySelectorAll('.stream-panel').forEach((panel) => panelObserver.observe(panel));
                 document.querySelectorAll('.video-monitor-card').forEach((card) => panelObserver.observe(card));
             }, 2800);
         });
 
-        // High-Performance Cascade Intersection Observer for Smooth Scroll Entrance Actions
+        // Advanced Intersection Observer Mechanics for Scroll Trigger Entrance Animations
         const panelObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active-view');
-                    panelObserver.unobserve(entry.target); // Unobserve once animated onto view coordinates
+                    panelObserver.unobserve(entry.target); 
                 }
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+        }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
 
         // HUD Console Data Population Methods
         function launchLightbox(title, tag, description, listItems) {
