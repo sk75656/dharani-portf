@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DHARANI S K - PORTFOLIO</title>
-    <!-- Premium Google Fonts & System Icon Toolkits -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-void: #010205;
-            --panel-matrix: rgba(6, 10, 23, 0.6);
+            --bg-void: #010204;
+            --panel-matrix: rgba(5, 9, 22, 0.55);
             --neon-cyan: #06b6d4;
             --neon-blue: #3b82f6;
             --neon-purple: #7c3aed;
@@ -40,41 +39,41 @@
             height: 100vh;
         }
 
-        /* Smooth Cinematic Custom Scrollbar */
+        /* Smooth Custom Modern Scrollbar */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg-void); }
-        ::-webkit-scrollbar-thumb { background: #0c1222; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.1); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
+        ::-webkit-scrollbar-thumb { background: #0b101f; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.08); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); box-shadow: 0 0 12px var(--neon-cyan); }
 
-        /* Ambient Parallax Chroma Orbs */
+        /* Ambient Parallax Plasma Fields */
         .plasma-flare-1 {
             position: fixed;
-            width: 700px;
-            height: 700px;
+            width: 750px;
+            height: 750px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, rgba(6,182,212,0.01) 50%, rgba(0,0,0,0) 70%);
-            top: -200px;
-            right: -100px;
+            background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, rgba(6,182,212,0.01) 50%, rgba(0,0,0,0) 70%);
+            top: -250px;
+            right: -120px;
             z-index: -2;
             pointer-events: none;
-            filter: blur(50px);
+            filter: blur(60px);
         }
 
         .plasma-flare-2 {
             position: fixed;
-            width: 600px;
-            height: 600px;
+            width: 650px;
+            height: 650px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(217,70,239,0.04) 0%, rgba(59,130,246,0.01) 50%, rgba(0,0,0,0) 70%);
-            bottom: -150px;
-            left: -150px;
+            background: radial-gradient(circle, rgba(217,70,239,0.03) 0%, rgba(59,130,246,0.01) 50%, rgba(0,0,0,0) 70%);
+            bottom: -180px;
+            left: -180px;
             z-index: -2;
             pointer-events: none;
-            filter: blur(50px);
+            filter: blur(60px);
         }
 
         /* ==========================================================================
-           CINEMATIC BLEND HUD INTRO OVERLAY
+           SEAMLESS CINEMATIC HUDBLEND MOVIE INTRO SEQUENCE
            ========================================================================== */
         #cinematic-loader {
             position: fixed;
@@ -88,18 +87,19 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.2s cubic-bezier(0.85, 0, 0.15, 1), filter 1.2s ease;
+            transition: opacity 1.4s cubic-bezier(0.76, 0, 0.24, 1), transform 1.4s cubic-bezier(0.76, 0, 0.24, 1), filter 1.4s ease;
+            will-change: transform, opacity;
         }
 
         .intro-silhouette-frame {
-            height: 290px;
+            height: 300px;
             width: auto;
             position: relative;
             opacity: 0;
-            transform: translateY(30px) scale(0.95);
-            filter: blur(5px) brightness(0.5);
-            animation: portraitRiseWake 1.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.2s;
-            margin-bottom: 25px;
+            transform: translateY(40px) scale(0.96);
+            filter: blur(8px) brightness(0.3);
+            animation: portraitRiseWake 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.2s;
+            margin-bottom: 30px;
         }
 
         .intro-silhouette-frame img {
@@ -113,24 +113,24 @@
             position: absolute;
             bottom: 0; left: 50%;
             transform: translateX(-50%);
-            width: 160px; height: 2px;
+            width: 180px; height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-            box-shadow: 0 0 15px var(--neon-cyan);
-            animation: scanLine 1.6s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            animation: scanLine 1.8s ease-in-out infinite alternate;
         }
 
         .intro-title-block {
             text-align: center;
             opacity: 0;
-            transform: translateY(10px);
-            animation: textFadeIn 0.8s ease forwards 1.2s;
+            transform: translateY(15px);
+            animation: textFadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.3s;
         }
 
         .intro-title-block h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 900;
-            letter-spacing: 8px;
+            letter-spacing: 10px;
             text-transform: uppercase;
             color: #fff;
         }
@@ -139,21 +139,22 @@
             background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
+            text-shadow: 0 0 35px rgba(6, 182, 212, 0.25);
         }
 
         .intro-title-block p {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.75rem;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             color: #475569;
             text-transform: uppercase;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
         #cinematic-loader.clear {
             opacity: 0;
-            filter: blur(15px);
+            transform: scale(1.02) translateY(-20px);
+            filter: blur(20px);
             pointer-events: none;
         }
 
@@ -166,35 +167,38 @@
         }
 
         @keyframes scanLine {
-            0% { bottom: 0%; opacity: 0.2; }
-            100% { bottom: 95%; opacity: 1; }
+            0% { bottom: 0%; opacity: 0.1; }
+            100% { bottom: 98%; opacity: 1; }
         }
 
         /* ==========================================================================
-           MAIN PLATFORM DESIGN MODULES
+           MAIN PRESENTATION SHELL
            ========================================================================== */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 25px 10%;
-            background: rgba(1, 2, 5, 0.85);
+            background: rgba(1, 2, 4, 0.85);
             backdrop-filter: blur(30px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.01);
         }
 
         .nav-brand {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 900;
             letter-spacing: 2px;
             color: #fff;
             text-decoration: none;
+            transition: opacity 0.3s;
         }
+
+        .nav-brand:hover { opacity: 0.85; }
 
         .nav-brand span {
             background: linear-gradient(to right, var(--neon-cyan), var(--neon-pink));
@@ -206,11 +210,11 @@
             color: #475569;
             text-decoration: none;
             margin-left: 35px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         .nav-routes a:hover, .nav-routes a.active {
@@ -218,14 +222,14 @@
             text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
         }
 
-        /* Split Hero Layout Grid */
+        /* Split Hero Area Layout Grid */
         header {
             min-height: 100vh;
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
+            grid-template-columns: 1.18fr 0.82fr;
             align-items: center;
             padding: 120px 10% 40px 10%;
-            gap: 60px;
+            gap: 65px;
         }
 
         .hero-statement-box {
@@ -276,15 +280,16 @@
             max-width: 620px;
         }
 
-        /* Portrait Core Studio Rig Stack */
+        /* Portrait Rig System Stack */
         .portrait-stack-rig {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 100%;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s;
+            will-change: transform, opacity;
         }
 
         #main-portfolio-content.ready .portrait-stack-rig {
@@ -308,7 +313,6 @@
             transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* Cybernetic mesh lines backdrop layout */
         .hero-portrait-dock::before {
             content: '';
             position: absolute;
@@ -318,16 +322,16 @@
             z-index: 1;
         }
 
-        /* Dynamic Lighting Back-glow effect */
+        /* Studio Lighting Backdrop Projection Orb */
         .hero-portrait-dock::after {
             content: '';
             position: absolute;
-            width: 250px; height: 250px;
+            width: 260px; height: 250px;
             background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
             bottom: 20px; left: 50%;
             transform: translateX(-50%);
             z-index: 0;
-            transition: all 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .hero-portrait-dock img {
@@ -339,13 +343,19 @@
             transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* Software-Based Lighting Rig Integrations[cite: 2] */
+        .hero-portrait-dock:hover img {
+            transform: scale(1.025) translateY(-2px);
+        }
+
+        /* Dynamic Lighting Color Backdrops linked to active tool hover states */
         .portrait-stack-rig:has(.pr:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(234,88,12,0.3) 0%, transparent 70%); }
         .portrait-stack-rig:has(.ai:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(255,145,0,0.3) 0%, transparent 70%); }
         .portrait-stack-rig:has(.ps:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(2,132,199,0.3) 0%, transparent 70%); }
         .portrait-stack-rig:has(.cv:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(0,196,204,0.3) 0%, transparent 70%); }
 
-        /* Dynamic Toolkit Badges[cite: 2] */
+        /* ==========================================================================
+           TRANSPARENT SKILLS MODULAR CHIPS (NATIVE PNG IMAGES DIRECTLY EMBEDDED)
+           ========================================================================== */
         .software-toolkit-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -357,26 +367,29 @@
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 4px;
-            padding: 14px 5px;
+            padding: 12px 5px;
             text-align: center;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             color: #cbd5e1;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
         }
 
-        .tool-node-chip i {
-            font-size: 1.2rem;
-            color: #475569;
-            transition: all 0.3s ease;
+        /* Native PNG Image Layering and scaling calculations */
+        .tool-node-chip img {
+            height: 26px;
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(40%) contrast(90%);
+            transition: all 0.35s ease;
         }
 
         .tool-node-chip:hover {
@@ -384,17 +397,20 @@
             transform: translateY(-4px);
             color: #fff;
         }
-        .tool-node-chip.pr:hover { border-color: #ea580c; box-shadow: 0 0 20px rgba(234,88,12,0.3); }
-        .tool-node-chip.pr:hover i { color: #ea580c; text-shadow: 0 0 10px #ea580c; }
-        .tool-node-chip.ai:hover { border-color: #ff9100; box-shadow: 0 0 20px rgba(255,145,0,0.3); }
-        .tool-node-chip.ai:hover i { color: #ff9100; text-shadow: 0 0 10px #ff9100; }
-        .tool-node-chip.ps:hover { border-color: #0284c7; box-shadow: 0 0 20px rgba(2,132,199,0.3); }
-        .tool-node-chip.ps:hover i { color: #0284c7; text-shadow: 0 0 10px #0284c7; }
-        .tool-node-chip.cv:hover { border-color: #00c4cc; box-shadow: 0 0 20px rgba(0,196,204,0.3); }
-        .tool-node-chip.cv:hover i { color: #00c4cc; text-shadow: 0 0 10px #00c4cc; }
+
+        .tool-node-chip:hover img {
+            filter: grayscale(0%) contrast(105%);
+            transform: scale(1.1);
+        }
+
+        /* Custom glow frames scaled for each transparent image card */
+        .tool-node-chip.pr:hover { border-color: #ea580c; box-shadow: 0 0 20px rgba(234,88,12,0.25); }
+        .tool-node-chip.ai:hover { border-color: #ff9100; box-shadow: 0 0 20px rgba(255,145,0,0.25); }
+        .tool-node-chip.ps:hover { border-color: #0284c7; box-shadow: 0 0 20px rgba(2,132,199,0.25); }
+        .tool-node-chip.cv:hover { border-color: #00c4cc; box-shadow: 0 0 20px rgba(0,196,204,0.25); }
 
         /* ==========================================================================
-           CLEAN FULL-IMAGE PORTFOLIO STREAM (CHROMA PANEL EFFECT)
+           FULL-IMAGE STREAM CHANNELS (PREMIUM SCROLL EFFECTS)
            ========================================================================== */
         .showcase-arena {
             padding: 140px 10% 40px 10%;
@@ -454,7 +470,6 @@
             filter: blur(0px) brightness(1);
         }
 
-        /* High-End Liquid Glow Border Transition */
         .stream-panel:hover {
             border-color: rgba(6, 182, 212, 0.4);
             box-shadow: 0 30px 60px rgba(6, 182, 212, 0.12);
@@ -473,7 +488,7 @@
         }
 
         /* ==========================================================================
-           CINEMATIC MOTION THEATER — VIDEO 1 & VIDEO 2
+           CINEMATIC MOTION THEATER MODULE
            ========================================================================== */
         .video-projection-station {
             padding: 100px 10% 140px 10%;
@@ -509,7 +524,7 @@
 
         .video-monitor-card:hover {
             border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 25px 55px rgba(139, 92, 246, 0.1);
+            box-shadow: 0 25px 55px rgba(139, 92, 246, 0.15);
         }
 
         .monitor-header-path {
@@ -551,7 +566,7 @@
         }
 
         /* ==========================================================================
-           DYNAMIC TERMINAL LIGHTBOX MODALS
+           DYNAMIC LIGHTBOX MODALS
            ========================================================================== */
         .terminal-lightbox {
             position: fixed;
@@ -664,7 +679,7 @@
         }
 
         /* ==========================================================================
-           CONSOLIDATED SYSTEM CONSOLE FOOTER
+           CONSOLIDATED CORES FOOTER
            ========================================================================== */
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.02);
@@ -695,7 +710,6 @@
             gap: 30px;
         }
 
-        /* Resume Action Download Link */
         .resume-download-btn {
             font-family: 'Orbitron', sans-serif;
             display: inline-flex;
@@ -730,7 +744,6 @@
 
         .resume-download-btn:hover i { transform: translateY(3px); }
 
-        /* Unified Pipeline Channels Group */
         .comms-channel-bridge {
             display: flex;
             gap: 24px;
@@ -795,10 +808,9 @@
     <div class="plasma-flare-1"></div>
     <div class="plasma-flare-2"></div>
 
-    <!-- Immersive Silhouette Image Loader Overlay -->
     <div id="cinematic-loader">
         <div class="intro-silhouette-frame">
-            <img src="profile .png" alt="Dharani SK Space Matrix">
+            <img src="profile .png" alt="Dharani SK Space Architecture Matrix">
         </div>
         <div class="intro-title-block">
             <h1>Dharani<span> SK</span></h1>
@@ -806,50 +818,44 @@
         </div>
     </div>
 
-    <!-- Active Main Framework Container -->
     <div id="main-portfolio-content">
         
-        <!-- Navigation Menu Controls -->
         <nav>
-            <a href="#" class="nav-brand">DHARANI<span>.</span>STUDIOS</a>
+            <a href="#" class="nav-brand">DHARANI S K <span>-</span> PORTFOLIO</a>
             <div class="nav-routes">
                 <a href="#" class="active">Creative Index</a>
                 <a href="#contact">Terminal Connect</a>
             </div>
         </nav>
 
-        <!-- Dynamic Split Hero Spread -->
         <header>
             <div class="hero-statement-box">
                 <div class="hero-matrix-flag">Electronics Engineer &amp; Graphic Designer</div>
                 <h2><span>High-Converting Packaging Structures &amp; Brand</span> <em>Identity Layouts.</em></h2>
-                <p>Fusing the systemic logic and technical precision of an Electronics &amp; Communication Engineering background (VCET) with high-converting brand layouts generated via clean geometry vectors and structured creative software assets[cite: 2].</p>
+                <p>Fusing the systemic logic and technical precision of an Electronics &amp; Communication Engineering background (VCET) with high-converting brand layouts generated via clean geometry vectors and structured creative software assets.</p>
             </div>
             
-            <!-- Unified Portrait & Interactive Tool Deck -->
             <div class="portrait-stack-rig">
                 <div class="hero-portrait-dock">
-                    <img src="profile .png" alt="Dharani SK Production Master" markdown="0">
+                    <img src="profile .png" alt="Dharani SK Production Blueprint Master" markdown="0">
                 </div>
-                <!-- Creative Software Badges Block under Portrait Layout[cite: 2] -->
                 <div class="software-toolkit-bar">
-                    <div class="tool-node-chip pr" title="Adobe Premiere Pro Skills Studio[cite: 2]">
-                        <i class="fa-solid fa-video"></i>Pr
+                    <div class="tool-node-chip pr" title="Adobe Premiere Pro Production Suite">
+                        <img src="pr.png" alt="Premiere Pro Core Asset File">Pr
                     </div>
-                    <div class="tool-node-chip ai" title="Adobe Illustrator Skills Studio[cite: 2]">
-                        <i class="fa-solid fa-bezier-curve"></i>Ai
+                    <div class="tool-node-chip ai" title="Adobe Illustrator Vector Suite">
+                        <img src="Ai.png" alt="Illustrator Core Asset File">Ai
                     </div>
-                    <div class="tool-node-chip ps" title="Adobe Photoshop Skills Studio[cite: 2]">
-                        <i class="fa-solid fa-palette"></i>Ps
+                    <div class="tool-node-chip ps" title="Adobe Photoshop Canvas Suite">
+                        <img src="Ps.png" alt="Photoshop Core Asset File">Ps
                     </div>
-                    <div class="tool-node-chip cv" title="Canva Creative Suite Engine">
-                        <i class="fa-solid fa-sparkles"></i>Cn
+                    <div class="tool-node-chip cv" title="Canva Creative Engine Assets">
+                        <img src="Canva.png" alt="Canva Studio Core Asset File">Cn
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Continuous Full-Image Stream Arena -->
         <section class="showcase-arena" id="work">
             <div class="arena-heading">
                 <h3>Workspace Index</h3>
@@ -858,77 +864,62 @@
             
             <div class="stream-column">
                 
-                <!-- HARDWARE ADVISORY SYSTEM NO 01 FROM INTERACTIVE CV[cite: 2] -->
-                <div class="stream-panel" onclick="launchLightbox('Smart Glasses Assistant System', 'Embedded Engineering Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters[cite: 2].', ['Embedded camera modules with live ultrasonic sensor mapping arrays[cite: 2]', 'Vibrational haptic nodes paired with synchronized audio indicators[cite: 2]', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines[cite: 2]'])">
-                    <img src="1.jpg" alt="Smart Glasses Automation Interface Layout[cite: 2]">
+                <div class="stream-panel" onclick="launchLightbox('Smart Glasses Assistant System', 'Embedded Engineering Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters.', ['Embedded camera modules with live ultrasonic sensor mapping arrays', 'Vibrational haptic nodes paired with synchronized audio indicators', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines'])">
+                    <img src="1.jpg" alt="Smart Glasses Automation Interface Layout">
                 </div>
 
-                <!-- SLIDE 02 -->
                 <div class="stream-panel" onclick="launchLightbox('Outrider 40L Rucksack', 'Technical Product Strategy', 'Conquer Outdoor with absolute tactical capacity. Engineered for wild terrains and professional cross-mountain utility layouts.', ['Diamond-Ripstop Weatherproof Fabric Layering', 'Integrated External Webbing &amp; Multi-Point Compression', 'Dual-Density Ergonomic Shoulder Harness System Layout'])">
                     <img src="2.jpg" alt="Outrider Technical Product Sheet Layout">
                 </div>
 
-                <!-- SLIDE 03 -->
                 <div class="stream-panel" onclick="launchLightbox('Travel to Desire 45L', 'Tactical Carrier Blueprint', 'Designed for modern digital nomads demanding secure device integration and high capacity execution paths.', ['180° Clamshell Laptop Vault Alignment', 'Ventilated Isolated Shoe &amp; Laundry Bay Design', 'Scratch-Resistant Micro-Fleece Tech Spaces'])">
                     <img src="3.jpg" alt="Travel to Desire Asset Map Layout">
                 </div>
 
-                <!-- SLIDE 04 -->
                 <div class="stream-panel" onclick="launchLightbox('Urban Handbag Collection', 'Minimalist Premium Grid', 'Sleek, fluid lifestyle layouts demonstrating how technical waterproof protection fits into elegant street aesthetics.', ['High-Grade Matte Waterproof Polyester Weave', 'Hidden Magnetic Structural Closures', 'Subtle Metallic Embossed Branding Accents'])">
                     <img src="4.jpg" alt="Urban Handbags Retail Grid Layout">
                 </div>
 
-                <!-- SLIDE 05 -->
                 <div class="stream-panel" onclick="launchLightbox('iStorm Food Utility', 'Thermal Performance Map', 'Engineered asset layout designed to communicate multi-layer insulating performance visually.', ['Ultra-Thick High-Density Thermal Insulation Core', 'Leakproof Wipe-Clean Anti-Microbial Foil Lining', 'Heavy-Duty Dual Tensile Cross-Stitched Carrying Straps'])">
                     <img src="5.jpg" alt="iStorm Insulated Utility Blueprint Layout">
                 </div>
 
-                <!-- SLIDE 06 -->
                 <div class="stream-panel" onclick="launchLightbox('Peri Peri Quinoa Chips', 'Food Packaging Grid', 'Vibrant, flavor-forward canister configuration using bright visual hierarchies to capture target market segments.', ['Premium Grade Crispy Makhana Base Blend Art', 'Dynamic Roasted Pepper Visual Vector Elements', 'Zero Greasy Residue Integrated Purity Icon'])">
                     <img src="6.jpg" alt="Peri Peri Healthy Chip Packaging Label Layout">
                 </div>
 
-                <!-- SLIDE 07 -->
                 <div class="stream-panel" onclick="launchLightbox('Salted Beetroot Strips', 'Organic Label Architecture', 'Deep magenta color block architectures that frame natural root vegetable profiles with high-contrast text layers.', ['Bold 80% Pure Beetroot Pulp Infusion Callout', 'Clean Plant-Based Processing Certification Graphics', 'Highly Digestible Dietary Fiber Informational Grid'])">
                     <img src="7.jpg" alt="Salted Beetroot Healthy Chip Packaging Label Layout">
                 </div>
 
-                <!-- SLIDE 08 -->
                 <div class="stream-panel" onclick="launchLightbox('Wayanad Cardamom Chai', 'Artisan Label Configuration', 'Authentic geographic-specific label art layout showcasing natural origin criteria.', ['Garden Freshest Tea Circular Stamp Overlay', 'Synthetic-Free 100% Pure Production Layout', 'Cardamom Pod Natural Graphic Highlights'])">
                     <img src="8.jpg" alt="Wayanad Cardamom Luxury Blend Label Layout">
                 </div>
 
-                <!-- SLIDE 09 -->
                 <div class="stream-panel" onclick="launchLightbox('Neotea Mimosa Pudica', 'Clinical Herbal Layout', 'Structured multi-column packaging alignment balancing safety guidelines with traditional herbal values.', ['100% Natural Thotta Sinungi Powder Specifications', 'Ultra-Fine Milled Layouts For Mix Representation', 'Strict Non-GMO &amp; Organic Verification Seals'])">
                     <img src="9.jpg" alt="Neotea Thotta Sinungi Powder Label Layout">
                 </div>
 
-                <!-- SLIDE 10 -->
                 <div class="stream-panel" onclick="launchLightbox('Peach Blossom Streetwear', 'Asymmetric Lookbook Format', 'Dynamic layout formats inspired by hip-hop lookbooks to capture young trend-oriented demographics.', ['Bold 100% Breathable Cotton Material Layout Callouts', 'Asymmetric Minimalist Typography Spacing Hierarchies', 'Rich Screen-Print Graphic Center Placements'])">
                     <img src="10.jpg" alt="Peach Blossom Oversized Apparel Lookbook Flyer Layout">
                 </div>
 
-                <!-- SLIDE 11 -->
                 <div class="stream-panel" onclick="launchLightbox('Kart Black Trousers', 'Utilitarian Feature Poster', 'Balancing lifestyle comfort layouts with functional component details securely on an integrated page grid.', ['Reinforced Secure Zip Pocket Component Blueprints', 'Double-Stitch Fade Resistant Fabric Callout Blocks', 'Dual Side Comfort Geometry Indicators'])">
                     <img src="11.jpg" alt="Kart Black Active Utility Apparel Poster Layout">
                 </div>
 
-                <!-- SLIDE 12 -->
                 <div class="stream-panel" onclick="launchLightbox('Timber Drive Collectibles', 'Artisan Space Catalog', 'Shifting simple wooden toy layouts into luxury corporate desk sculpture catalog segments.', ['Hand-Sanded Sustainable Hardwood Blueprint Track', 'Non-Toxic Safe Organic Stain Certification Badging', 'Premium Home Gallery Decor Accent Framing'])">
                     <img src="12.jpg" alt="Timber Drive Toy Collectible Promotional Catalog Spread">
                 </div>
 
-                <!-- SYSTEM CASE 13 -->
                 <div class="stream-panel" onclick="launchLightbox('Artisan Terracotta Bell', 'Dimensional Data Blueprint', 'Dimension-led documentation charts assisting online consumers in visualizing real space layout attributes.', ['Genuine Kiln-Fired Terracotta Earthware Composition', 'Tiered Clay Layout Multi-Arrangement Dimensions', 'Scale Blueprint Interaction Blueprint Lines'])">
                     <img src="13.jpg" alt="Artisan Terracotta Bell Sizing Schematic Chart Layout">
                 </div>
 
-                <!-- SYSTEM CASE 14 -->
                 <div class="stream-panel" onclick="launchLightbox('DotCom Bunny Nightlight', 'Hardware Interface Icons', 'Simplifying complex device specifications into responsive micro-feature icons.', ['Soft BPA-Free Food-Grade Silicone Texture Tags', 'Tap-Control Multi-Color LED Spectrum Matrix Map', 'Type-C Rapid Charging Performance Parameters'])">
                     <img src="14.jpg" alt="DotCom Bunny Electronic Appliance Feature Grid Layout">
                 </div>
 
-                <!-- SYSTEM CASE 15 -->
                 <div class="stream-panel" onclick="launchLightbox('GMR Performance Cap', 'Athletic Tech Spec Grid', 'High-energy athletic accessory layout communicating advanced moisture absorption matrices.', ['Aero-Weave Moisture-Wicking Premium Material Layout', 'Thermal-Regulating Flat-Lock Interior Seam Charts', 'UV &amp; Sweat Weather-Resistant Boundary Seals'])">
                     <img src="15.jpg" alt="GMR Skull Cap Performance Fabric Specification Layout">
                 </div>
@@ -936,7 +927,6 @@
             </div>
         </section>
 
-        <!-- Cinematic Video Stage -->
         <section class="video-projection-station">
             <div class="arena-heading">
                 <h3>Motion Workspaces</h3>
@@ -944,14 +934,12 @@
             </div>
             
             <div class="video-deck-grid">
-                <!-- Video Monitor 01 -->
                 <div class="video-monitor-card">
                     <div class="monitor-header-path">Motion Spec: Video 1</div>
                     <div class="video-anchor-frame">
                         <iframe src="https://www.instagram.com/reel/C-xdx8oPkMr/embed/" allowtransparency="true" scrolling="no" frameborder="0"></iframe>
                     </div>
                 </div>
-                <!-- Video Monitor 02 -->
                 <div class="video-monitor-card">
                     <div class="monitor-header-path">Motion Spec: Video 2</div>
                     <div class="video-anchor-frame">
@@ -961,7 +949,6 @@
             </div>
         </section>
 
-        <!-- Command Console Popup Overlay Window -->
         <div class="terminal-lightbox" id="modalConsole" onclick="dismissConsoleOutside(event)">
             <div class="lightbox-panel">
                 <button class="lightbox-kill-btn" onclick="shutdownConsole()"><i class="fa-solid fa-square-xmark"></i></button>
@@ -970,26 +957,22 @@
                 <p class="panel-text-summary" id="panelDesc">Detailed process parameters.</p>
                 <div class="panel-list-header">Strategic Layout Specifications</div>
                 <ul class="panel-bullet-lines" id="panelBullets">
-                    <!-- Script prints bullet specs here dynamically -->
-                </ul>
+                    </ul>
             </div>
         </div>
 
-        <!-- Consolidated Command Footer -->
         <footer id="contact">
             <h4>Dharani S K Workspace Terminal</h4>
-            <p>E-Commerce Assets • Packaging Engineering • Motion Graphics Pipelines[cite: 2]</p>
+            <p>E-Commerce Assets • Packaging Engineering • Motion Graphics Pipelines</p>
             
             <div class="footer-action-deck">
-                <!-- Resume action anchor point -->
                 <a href="sk_resume.pdf" class="resume-download-btn" download="Dharani_SK_Resume.pdf">
-                    <i class="fa-solid fa-cloud-arrow-down"></i> Download Professional Resume[cite: 2]
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Download Professional Resume
                 </a>
                 
-                <!-- Combined Gmail & GitHub Channels Matrix Below download button -->
                 <div class="comms-channel-bridge">
-                    <a href="mailto:skdharani2004@gmail.com" title="Direct Email Transmission Tunnel[cite: 2]">
-                        <i class="fa-solid fa-envelope"></i> skdharani2004@gmail.com[cite: 2]
+                    <a href="mailto:skdharani2004@gmail.com" title="Direct Email Transmission Tunnel">
+                        <i class="fa-solid fa-envelope"></i> skdharani2004@gmail.com
                     </a>
                     <a href="https://github.com/sk75656" target="_blank" title="GitHub Storage Pipeline Address">
                         <i class="fa-brands fa-github"></i> github.com/sk75656
@@ -1000,7 +983,7 @@
     </div>
 
     <script {nonce}>
-        // CINEMATIC OVERLAY REVEAL CONTROLLER
+        // CINEMATIC SPLIT OVERLAY TIMELINE CONTROLLER
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const loaderStage = document.getElementById('cinematic-loader');
@@ -1010,13 +993,13 @@
                 coreWrapper.classList.add('ready');
                 document.body.classList.remove('lock-intro');
                 
-                // Initialize scroll observers once intro layer clears out
+                // Initialize high-performance stream observer once screen veil rolls off
                 document.querySelectorAll('.stream-panel').forEach((panel) => panelObserver.observe(panel));
                 document.querySelectorAll('.video-monitor-card').forEach((card) => panelObserver.observe(card));
             }, 2800);
         });
 
-        // Advanced Intersection Observer Mechanics for Scroll Trigger Entrance Animations
+        // Staggered Cascade Intersection Observer for Scroll Entrance Actions
         const panelObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -1024,7 +1007,7 @@
                     panelObserver.unobserve(entry.target); 
                 }
             });
-        }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
+        }, { threshold: 0.05, rootMargin: "0px 0px -30px 0px" });
 
         // HUD Console Data Population Methods
         function launchLightbox(title, tag, description, listItems) {
