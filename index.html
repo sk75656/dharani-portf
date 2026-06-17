@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DHARANI S K - PORTFOLIO</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+
     <style>
         :root {
             --bg-void: #010204;
-            --panel-matrix: rgba(5, 9, 22, 0.55);
+            --panel-matrix: rgba(4, 7, 18, 0.6);
             --neon-cyan: #06b6d4;
             --neon-blue: #3b82f6;
             --neon-purple: #7c3aed;
             --neon-pink: #d946ef;
-            --border-glow: rgba(6, 182, 212, 0.12);
             --text-main: #f8fafc;
             --text-muted: #475569;
         }
@@ -31,7 +34,6 @@
             color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
         body.lock-intro {
@@ -39,43 +41,18 @@
             height: 100vh;
         }
 
-        /* Smooth Custom Modern Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: var(--bg-void); }
-        ::-webkit-scrollbar-thumb { background: #0b101f; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.08); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); box-shadow: 0 0 12px var(--neon-cyan); }
-
-        /* Ambient Parallax Plasma Fields */
-        .plasma-flare-1 {
-            position: fixed;
-            width: 750px;
-            height: 750px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, rgba(6,182,212,0.01) 50%, rgba(0,0,0,0) 70%);
-            top: -250px;
-            right: -120px;
-            z-index: -2;
-            pointer-events: none;
-            filter: blur(60px);
+        /* Lenis smooth scroll optimization rules */
+        html.lenis {
+            height: auto;
         }
-
-        .plasma-flare-2 {
-            position: fixed;
-            width: 650px;
-            height: 650px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(217,70,239,0.03) 0%, rgba(59,130,246,0.01) 50%, rgba(0,0,0,0) 70%);
-            bottom: -180px;
-            left: -180px;
-            z-index: -2;
+        .lenis-scrolling body {
             pointer-events: none;
-            filter: blur(60px);
         }
 
         /* ==========================================================================
-           SEAMLESS CINEMATIC HUDBLEND MOVIE INTRO SEQUENCE
+           GLACIER CRYO-REVEAL INTRO OVERLAY
            ========================================================================== */
-        #cinematic-loader {
+        #glacier-loader {
             position: fixed;
             top: 0;
             left: 0;
@@ -84,102 +61,86 @@
             background-color: #000;
             z-index: 99999;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.4s cubic-bezier(0.76, 0, 0.24, 1), transform 1.4s cubic-bezier(0.76, 0, 0.24, 1), filter 1.4s ease;
-            will-change: transform, opacity;
+            overflow: hidden;
         }
 
-        .intro-silhouette-frame {
-            height: 300px;
-            width: auto;
-            position: relative;
-            opacity: 0;
-            transform: translateY(40px) scale(0.96);
-            filter: blur(8px) brightness(0.3);
-            animation: portraitRiseWake 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.2s;
-            margin-bottom: 30px;
-        }
-
-        .intro-silhouette-frame img {
+        /* Frosted Glacier split sheets */
+        .glacier-gate {
+            position: absolute;
+            width: 50%;
             height: 100%;
+            background: rgba(10, 25, 47, 0.2);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1;
+            transition: border-color 0.5s;
+        }
+        .glacier-gate.left { left: 0; }
+        .glacier-gate.right { right: 0; border-right: none; border-left: 1px solid rgba(255, 255, 255, 0.05); }
+
+        .loader-center-pod {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .cryo-portrait {
+            height: 240px;
             width: auto;
             object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.2)) brightness(0);
+            transform: scale(0.9);
+            margin-bottom: 25px;
         }
 
-        .intro-silhouette-frame::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 180px; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-            box-shadow: 0 0 20px var(--neon-cyan);
-            animation: scanLine 1.8s ease-in-out infinite alternate;
-        }
-
-        .intro-title-block {
-            text-align: center;
-            opacity: 0;
-            transform: translateY(15px);
-            animation: textFadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.3s;
-        }
-
-        .intro-title-block h1 {
+        .cryo-name {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            letter-spacing: 10px;
+            letter-spacing: 12px;
             text-transform: uppercase;
             color: #fff;
+            opacity: 0;
+            filter: blur(15px);
         }
 
-        .intro-title-block h1 span {
+        .cryo-name span {
             background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 35px rgba(6, 182, 212, 0.25);
-        }
-
-        .intro-title-block p {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 5px;
-            color: #475569;
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        #cinematic-loader.clear {
-            opacity: 0;
-            transform: scale(1.02) translateY(-20px);
-            filter: blur(20px);
-            pointer-events: none;
-        }
-
-        @keyframes portraitRiseWake {
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px) brightness(1.05); }
-        }
-
-        @keyframes textFadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes scanLine {
-            0% { bottom: 0%; opacity: 0.1; }
-            100% { bottom: 98%; opacity: 1; }
         }
 
         /* ==========================================================================
-           MAIN PRESENTATION SHELL
+           MOUSE SPOTLIGHT EFFECTS & CONTAINER ENVIRONMENT
            ========================================================================== */
+        #global-spotlight {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6,182,212,0.04) 0%, rgba(124,58,237,0.01) 50%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            will-change: left, top;
+        }
+
+        /* Main Page Core Shell Wrapper */
+        #main-portfolio-content {
+            opacity: 0;
+            will-change: opacity, transform;
+        }
+
+        /* Premium Minimalist Top Bar Menu */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 25px 10%;
-            background: rgba(1, 2, 4, 0.85);
+            background: rgba(1, 2, 4, 0.8);
             backdrop-filter: blur(30px);
             position: fixed;
             width: 100%;
@@ -195,10 +156,7 @@
             letter-spacing: 2px;
             color: #fff;
             text-decoration: none;
-            transition: opacity 0.3s;
         }
-
-        .nav-brand:hover { opacity: 0.85; }
 
         .nav-brand span {
             background: linear-gradient(to right, var(--neon-cyan), var(--neon-pink));
@@ -214,7 +172,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.3s ease;
+            transition: color 0.3s;
         }
 
         .nav-routes a:hover, .nav-routes a.active {
@@ -222,11 +180,11 @@
             text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
         }
 
-        /* Split Hero Area Layout Grid */
+        /* Split Screen Header Module */
         header {
             min-height: 100vh;
             display: grid;
-            grid-template-columns: 1.18fr 0.82fr;
+            grid-template-columns: 1.15fr 0.85fr;
             align-items: center;
             padding: 120px 10% 40px 10%;
             gap: 65px;
@@ -270,7 +228,6 @@
             background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.3));
         }
 
         header p {
@@ -280,21 +237,12 @@
             max-width: 620px;
         }
 
-        /* Portrait Rig System Stack */
+        /* Portrait Core Studio Rig Stack */
         .portrait-stack-rig {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 100%;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s;
-            will-change: transform, opacity;
-        }
-
-        #main-portfolio-content.ready .portrait-stack-rig {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .hero-portrait-dock {
@@ -310,19 +258,19 @@
             justify-content: center;
             backdrop-filter: blur(30px);
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
+        /* Interactive grid lines back-layer */
         .hero-portrait-dock::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(6, 182, 212, 0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.015) 1px, transparent 1px);
             background-size: 25px 25px;
             z-index: 1;
         }
 
-        /* Studio Lighting Backdrop Projection Orb */
+        /* Ambient background lighting node inside frame */
         .hero-portrait-dock::after {
             content: '';
             position: absolute;
@@ -331,7 +279,7 @@
             bottom: 20px; left: 50%;
             transform: translateX(-50%);
             z-index: 0;
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: background 0.5s ease;
         }
 
         .hero-portrait-dock img {
@@ -340,21 +288,16 @@
             object-fit: contain;
             position: relative;
             z-index: 2;
-            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .hero-portrait-dock:hover img {
-            transform: scale(1.025) translateY(-2px);
-        }
-
-        /* Dynamic Lighting Color Backdrops linked to active tool hover states */
+        /* Dynamic Lighting Back-glow maps linked to active tool hovers */
         .portrait-stack-rig:has(.pr:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(234,88,12,0.3) 0%, transparent 70%); }
         .portrait-stack-rig:has(.ai:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(255,145,0,0.3) 0%, transparent 70%); }
         .portrait-stack-rig:has(.ps:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(2,132,199,0.3) 0%, transparent 70%); }
         .portrait-stack-rig:has(.cv:hover) .hero-portrait-dock::after { background: radial-gradient(circle, rgba(0,196,204,0.3) 0%, transparent 70%); }
 
         /* ==========================================================================
-           TRANSPARENT SKILLS MODULAR CHIPS (NATIVE PNG IMAGES DIRECTLY EMBEDDED)
+           MAGNETIC SKILLS TOOL INTERACTION REGION
            ========================================================================== */
         .software-toolkit-bar {
             display: grid;
@@ -367,50 +310,48 @@
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 4px;
-            padding: 12px 5px;
+            padding: 14px 5px;
             text-align: center;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             color: #cbd5e1;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
+            position: relative;
+            will-change: transform;
         }
 
-        /* Native PNG Image Layering and scaling calculations */
         .tool-node-chip img {
             height: 26px;
             width: auto;
             object-fit: contain;
             filter: grayscale(40%) contrast(90%);
-            transition: all 0.35s ease;
+            transition: filter 0.3s;
+            pointer-events: none;
         }
 
         .tool-node-chip:hover {
-            background: rgba(255, 255, 255, 0.03);
-            transform: translateY(-4px);
             color: #fff;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .tool-node-chip:hover img {
             filter: grayscale(0%) contrast(105%);
-            transform: scale(1.1);
         }
 
-        /* Custom glow frames scaled for each transparent image card */
-        .tool-node-chip.pr:hover { border-color: #ea580c; box-shadow: 0 0 20px rgba(234,88,12,0.25); }
-        .tool-node-chip.ai:hover { border-color: #ff9100; box-shadow: 0 0 20px rgba(255,145,0,0.25); }
-        .tool-node-chip.ps:hover { border-color: #0284c7; box-shadow: 0 0 20px rgba(2,132,199,0.25); }
-        .tool-node-chip.cv:hover { border-color: #00c4cc; box-shadow: 0 0 20px rgba(0,196,204,0.25); }
+        .tool-node-chip.pr:hover { border-color: #ea580c; box-shadow: 0 0 20px rgba(234,88,12,0.2); }
+        .tool-node-chip.ai:hover { border-color: #ff9100; box-shadow: 0 0 20px rgba(255,145,0,0.2); }
+        .tool-node-chip.ps:hover { border-color: #0284c7; box-shadow: 0 0 20px rgba(2,132,199,0.2); }
+        .tool-node-chip.cv:hover { border-color: #00c4cc; box-shadow: 0 0 20px rgba(0,196,204,0.2); }
 
         /* ==========================================================================
-           FULL-IMAGE STREAM CHANNELS (PREMIUM SCROLL EFFECTS)
+           PREMIUM PROJECT PANEL SLIDES (TEXT-FREE CONTINUOUS BILLBOARDS)
            ========================================================================== */
         .showcase-arena {
             padding: 140px 10% 40px 10%;
@@ -443,6 +384,7 @@
             margin: 0 auto;
         }
 
+        /* Custom Project Reveal Frame States */
         .stream-panel {
             width: 100%;
             background-color: rgba(4, 6, 15, 0.7);
@@ -452,26 +394,15 @@
             position: relative;
             cursor: pointer;
             box-shadow: 0 20px 45px rgba(0,0,0,0.7);
-            opacity: 0;
-            transform: translateY(60px) scale(0.96);
-            filter: blur(8px) brightness(0.6);
-            transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                        transform 1s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                        filter 1s ease,
-                        border-color 0.4s ease,
-                        box-shadow 0.4s ease;
             display: flex;
+            opacity: 0;
+            transform: translateY(60px) scale(0.97);
+            filter: blur(10px);
             will-change: transform, opacity, filter;
         }
 
-        .stream-panel.active-view {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0px) brightness(1);
-        }
-
         .stream-panel:hover {
-            border-color: rgba(6, 182, 212, 0.4);
+            border-color: rgba(6, 182, 212, 0.35);
             box-shadow: 0 30px 60px rgba(6, 182, 212, 0.12);
         }
 
@@ -484,7 +415,7 @@
         }
 
         .stream-panel:hover img {
-            transform: scale(1.008);
+            transform: scale(1.006);
         }
 
         /* ==========================================================================
@@ -511,15 +442,11 @@
             display: flex;
             flex-direction: column;
             gap: 18px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .video-monitor-card.active-view {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 0;
+            transform: translateY(50px) scale(0.97);
+            filter: blur(10px);
+            will-change: transform, opacity, filter;
         }
 
         .video-monitor-card:hover {
@@ -566,7 +493,7 @@
         }
 
         /* ==========================================================================
-           DYNAMIC LIGHTBOX MODALS
+           DYNAMIC TERMINAL LIGHTBOX MODALS
            ========================================================================== */
         .terminal-lightbox {
             position: fixed;
@@ -605,7 +532,7 @@
         }
 
         .terminal-lightbox.active .lightbox-panel {
-            transform: translateY(0) scale(1);
+            transform: translateY(0 scale(1));
         }
 
         .lightbox-kill-btn {
@@ -679,13 +606,14 @@
         }
 
         /* ==========================================================================
-           CONSOLIDATED CORES FOOTER
+           CONSOLIDATED SYSTEM CONSOLE FOOTER WITH RESUME HUB
            ========================================================================== */
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.02);
             padding: 110px 10% 90px 10%;
             text-align: center;
             background: #010103;
+            position: relative;
         }
 
         footer h4 {
@@ -710,6 +638,7 @@
             gap: 30px;
         }
 
+        /* Magnetic style anchor points for download actions */
         .resume-download-btn {
             font-family: 'Orbitron', sans-serif;
             display: inline-flex;
@@ -727,6 +656,7 @@
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border-radius: 4px;
             background: linear-gradient(135deg, rgba(6,182,212,0.02), rgba(124,58,237,0.02));
+            will-change: transform;
         }
 
         .resume-download-btn i {
@@ -739,11 +669,9 @@
             border-color: var(--neon-cyan);
             background: rgba(6, 182, 212, 0.05);
             box-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
-            transform: translateY(-3px);
         }
 
-        .resume-download-btn:hover i { transform: translateY(3px); }
-
+        /* Pipeline Bridges Group */
         .comms-channel-bridge {
             display: flex;
             gap: 24px;
@@ -766,6 +694,7 @@
             align-items: center;
             gap: 12px;
             transition: all 0.3s ease;
+            will-change: transform;
         }
 
         .comms-channel-bridge a i {
@@ -779,7 +708,6 @@
             border-color: var(--neon-blue);
             background: rgba(59, 130, 246, 0.05);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
-            transform: translateY(-2px);
         }
 
         .comms-channel-bridge a:hover i { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
@@ -805,16 +733,17 @@
 </head>
 <body class="lock-intro">
 
-    <div class="plasma-flare-1"></div>
-    <div class="plasma-flare-2"></div>
+    <div id="global-spotlight"></div>
 
-    <div id="cinematic-loader">
-        <div class="intro-silhouette-frame">
-            <img src="profile .png" alt="Dharani SK Space Architecture Matrix">
-        </div>
-        <div class="intro-title-block">
-            <h1>Dharani<span> SK</span></h1>
-            <p>Graphic Design Studio // Systems Control</p>
+    <div id="glacier-loader">
+        <div class="glacier-gate left"></div>
+        <div class="glacier-gate right"></div>
+        <div class="loader-center-pod">
+            <img src="profile .png" alt="Silhouette Frame Load" class="cryo-portrait" id="introImg">
+            <div class="intro-title-block">
+                <h1 class="cryo-name" id="introName">Dharani<span> SK</span></h1>
+                <p id="introSub" style="opacity:0;">Design Systems Hub // Premium Engine</p>
+            </div>
         </div>
     </div>
 
@@ -832,24 +761,24 @@
             <div class="hero-statement-box">
                 <div class="hero-matrix-flag">Electronics Engineer &amp; Graphic Designer</div>
                 <h2><span>High-Converting Packaging Structures &amp; Brand</span> <em>Identity Layouts.</em></h2>
-                <p>Fusing the systemic logic and technical precision of an Electronics &amp; Communication Engineering background (VCET) with high-converting brand layouts generated via clean geometry vectors and structured creative software assets.</p>
+                <p>Fusing the systemic logic and technical precision of an Electronics &amp; Communication Engineering background (VCET) [cite: 17, 18] with high-converting brand layouts generated via clean geometry vectors and structured creative software assets[cite: 4, 7].</p>
             </div>
             
             <div class="portrait-stack-rig">
                 <div class="hero-portrait-dock">
-                    <img src="profile .png" alt="Dharani SK Production Blueprint Master" markdown="0">
+                    <img src="profile .png" alt="Dharani SK Production Master View" markdown="0">
                 </div>
                 <div class="software-toolkit-bar">
-                    <div class="tool-node-chip pr" title="Adobe Premiere Pro Production Suite">
+                    <div class="tool-node-chip pr" title="Adobe Premiere Pro Infrastructure Skills [cite: 7]">
                         <img src="pr.png" alt="Premiere Pro Core Asset File">Pr
                     </div>
-                    <div class="tool-node-chip ai" title="Adobe Illustrator Vector Suite">
+                    <div class="tool-node-chip ai" title="Adobe Illustrator Infrastructure Skills [cite: 7]">
                         <img src="Ai.png" alt="Illustrator Core Asset File">Ai
                     </div>
-                    <div class="tool-node-chip ps" title="Adobe Photoshop Canvas Suite">
+                    <div class="tool-node-chip ps" title="Adobe Photoshop Infrastructure Skills [cite: 7]">
                         <img src="Ps.png" alt="Photoshop Core Asset File">Ps
                     </div>
-                    <div class="tool-node-chip cv" title="Canva Creative Engine Assets">
+                    <div class="tool-node-chip cv" title="Canva Creative Suite Asset Skills">
                         <img src="Canva.png" alt="Canva Studio Core Asset File">Cn
                     </div>
                 </div>
@@ -864,7 +793,7 @@
             
             <div class="stream-column">
                 
-                <div class="stream-panel" onclick="launchLightbox('Smart Glasses Assistant System', 'Embedded Engineering Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters.', ['Embedded camera modules with live ultrasonic sensor mapping arrays', 'Vibrational haptic nodes paired with synchronized audio indicators', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines'])">
+                <div class="stream-panel" onclick="launchLightbox('Smart Glasses Assistant System', 'Embedded Engineering Spec', 'An advanced hardware integration workflow featuring object identification algorithms and security barriers engineered for daily usage parameters [cite: 24].', ['Embedded camera modules with live ultrasonic sensor mapping arrays [cite: 24]', 'Vibrational haptic nodes paired with synchronized audio indicators [cite: 25]', 'Integrated GPS tracking modules and custom Bluetooth data communication pipelines [cite: 26, 27]'])">
                     <img src="1.jpg" alt="Smart Glasses Automation Interface Layout">
                 </div>
 
@@ -966,15 +895,15 @@
             <p>E-Commerce Assets • Packaging Engineering • Motion Graphics Pipelines</p>
             
             <div class="footer-action-deck">
-                <a href="sk_resume.pdf" class="resume-download-btn" download="Dharani_SK_Resume.pdf">
-                    <i class="fa-solid fa-cloud-arrow-down"></i> Download Professional Resume
+                <a href="sk_resume.pdf" class="resume-download-btn magnetic-target" download="Dharani_SK_Resume.pdf">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Download Professional Resume [cite: 1]
                 </a>
                 
                 <div class="comms-channel-bridge">
-                    <a href="mailto:skdharani2004@gmail.com" title="Direct Email Transmission Tunnel">
-                        <i class="fa-solid fa-envelope"></i> skdharani2004@gmail.com
+                    <a href="mailto:skdharani2004@gmail.com" class="magnetic-target" title="Direct Email Tunnel [cite: 2]">
+                        <i class="fa-solid fa-envelope"></i> skdharani2004@gmail.com [cite: 2]
                     </a>
-                    <a href="https://github.com/sk75656" target="_blank" title="GitHub Storage Pipeline Address">
+                    <a href="https://github.com/sk75656" target="_blank" class="magnetic-target" title="GitHub Storage Address">
                         <i class="fa-brands fa-github"></i> github.com/sk75656
                     </a>
                 </div>
@@ -982,34 +911,143 @@
         </footer>
     </div>
 
-    <script {nonce}>
-        // CINEMATIC SPLIT OVERLAY TIMELINE CONTROLLER
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const loaderStage = document.getElementById('cinematic-loader');
-                const coreWrapper = document.getElementById('main-portfolio-content');
-                
-                loaderStage.classList.add('clear');
-                coreWrapper.classList.add('ready');
-                document.body.classList.remove('lock-intro');
-                
-                // Initialize high-performance stream observer once screen veil rolls off
-                document.querySelectorAll('.stream-panel').forEach((panel) => panelObserver.observe(panel));
-                document.querySelectorAll('.video-monitor-card').forEach((card) => panelObserver.observe(card));
-            }, 2800);
+    <script>
+        // Initialize Lenis Smooth Scroll Engine
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            touchMultiplier: 2,
+            infinite: false,
         });
 
-        // Staggered Cascade Intersection Observer for Scroll Entrance Actions
-        const panelObserver = new IntersectionObserver((entries) => {
+        function scrollLoop(time) {
+            lenis.raf(time);
+            requestAnimationFrame(scrollLoop);
+        }
+        requestAnimationFrame(scrollLoop);
+
+        // ==========================================================================
+        // GSAP CINEMATIC MOVIE TIMELINE MATRIX (GLACIER & SCHEMATIC POP)
+        // ==========================================================================
+        const introTimeline = gsap.timeline();
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Stage 1: Wake silhouette and trigger frosted unblur metrics
+            introTimeline.to("#introImg", {
+                opacity: 1,
+                scale: 1,
+                filter: "blur(0px) brightness(1)",
+                duration: 1.2,
+                ease: "power2.out"
+            })
+            // Stage 2: Cast crystal smooth name expansion
+            .to("#introName", {
+                opacity: 1,
+                filter: "blur(0px)",
+                letterSpacing: "4px",
+                duration: 1,
+                ease: "power3.out"
+            }, "-=0.4")
+            .to("#introSub", {
+                opacity: 1,
+                duration: 0.6
+            }, "-=0.2")
+            // Stage 3: Split glacier gates like theater shields
+            .to(".glacier-gate.left", {
+                xPercent: -100,
+                duration: 1.4,
+                ease: "power4.inOut"
+            }, "+=0.4")
+            .to(".glacier-gate.right", {
+                xPercent: 100,
+                duration: 1.4,
+                ease: "power4.inOut"
+            }, "-=1.4")
+            // Stage 4: Completely dissolve intro veil canvas
+            .to("#glacier-loader", {
+                opacity: 0,
+                duration: 0.6,
+                onComplete: () => {
+                    document.getElementById("glacier-loader").style.display = "none";
+                    document.body.classList.remove('lock-intro');
+                }
+            }, "-=0.4")
+            // Stage 5: Push primary app content coordinates live cleanly
+            .to("#main-portfolio-content", {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=0.5");
+        });
+
+        // ==========================================================================
+        // HARDWARE-ACCELERATED MOUSE LENS SPOTLIGHT COORDS
+        // ==========================================================================
+        const spotNode = document.getElementById("global-spotlight");
+        window.addEventListener("mousemove", (e) => {
+            gsap.to(spotNode, {
+                left: e.clientX,
+                top: e.clientY,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+        });
+
+        // ==========================================================================
+        // GSAP PHYSICS-BASED MAGNETIC BUTTON REGISTRATION
+        // ==========================================================================
+        document.querySelectorAll(".tool-node-chip, .magnetic-target").forEach((btn) => {
+            btn.addEventListener("mousemove", (e) => {
+                const boundary = btn.getBoundingClientRect();
+                const mX = e.clientX - boundary.left - boundary.width / 2;
+                const mY = e.clientY - boundary.top - boundary.height / 2;
+                
+                gsap.to(btn, {
+                    x: mX * 0.35,
+                    y: mY * 0.35,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            btn.addEventListener("mouseleave", () => {
+                gsap.to(btn, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.5)"
+                });
+            });
+        });
+
+        // ==========================================================================
+        // PREMIUM VISUAL REVEAL OBSERVER SYSTEMS
+        // ==========================================================================
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active-view');
-                    panelObserver.unobserve(entry.target); 
+                    gsap.to(entry.target, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                        duration: 1,
+                        ease: "power3.out"
+                    });
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.05, rootMargin: "0px 0px -30px 0px" });
+        }, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
 
-        // HUD Console Data Population Methods
+        document.querySelectorAll('.stream-panel, .video-monitor-card').forEach((node) => {
+            revealObserver.observe(node);
+        });
+
+        // Lightbox Popup Methods
         function launchLightbox(title, tag, description, listItems) {
             document.getElementById('panelTitle').innerText = title;
             document.getElementById('panelTag').innerText = `// ${tag}`;
